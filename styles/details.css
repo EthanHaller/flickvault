@@ -15,6 +15,7 @@ p {
 
 .movie-details {
     padding-inline: 2rem;
+    z-index: 5;
 }
 
 .details-title {
@@ -42,7 +43,7 @@ p {
 }
 
 .details-year-rating-time p {
-    margin: 0.5rem 3rem;
+    margin: 0.5rem 2rem;
     font-size: 2rem;
 }
 
@@ -72,4 +73,12 @@ p {
     background-color: var(--bg-secondary);
     border-radius: 5px;
     padding: 0.5rem 2rem;
+}
+
+@media screen and (max-width: 992px) {
+    .details-poster-wrapper {
+        position: fixed;
+        background-color: var(--bg-primary);
+        opacity: 0.05;
+    }
 }
