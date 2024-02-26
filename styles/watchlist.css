@@ -5,6 +5,12 @@
 }
 
 .movie-card-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.movie-card-grid {
     display: grid;
     gap: 2rem;  
     grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
