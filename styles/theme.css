@@ -1,4 +1,4 @@
-root {
+:root {
     --bg-primary: #222222;
     --bg-secondary: #333333;
     --accent-red: #FF7575;
@@ -9,4 +9,9 @@ root {
 
 body {
     background-color: var(--bg-primary);
+}
+
+.nav {
+    background-color: var(--bg-secondary) !important;
+    font-family: "Inter", sans-serif;
 }
