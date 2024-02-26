@@ -1,4 +1,4 @@
-root {
+:root {
     --bg-primary: #222222;
     --bg-secondary: #333333;
     --accent-red: #FF7575;
@@ -8,5 +8,18 @@ root {
 }
 
 body {
-    background-color: var(--bg-primary);
+    background-color: var(--bg-primary) !important;
+}
+
+nav {
+    height: 5rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    color: var(--text-primary);
+    text-decoration: none;
 }
