@@ -12,6 +12,8 @@ body {
 }
 
 nav {
+    height: 4rem;
+    z-index: 50;
     padding: 0.5rem 1rem;
     background-color: var(--bg-secondary) !important;
     display: flex;
@@ -21,4 +23,25 @@ nav {
 nav a {
     color: var(--text-primary);
     text-decoration: none;
+}
+
+nav h1 {
+    margin: 0px 0.5rem;
+    font-size: 2rem;
+}
+
+.nav-search {
+    background-color: var(--bg-secondary);
+    color: var(--accent-yellow);
+    border-color: var(--accent-yellow);
+}
+
+.nav-search:hover {
+    background-color: var(--accent-yellow);
+    color: var(--bg-primary);
+}
+
+.navbar-collapse {
+    background-color: var(--bg-secondary);
+    z-index: 50;
 }
