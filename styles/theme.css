@@ -41,6 +41,15 @@ nav h1 {
     color: var(--bg-primary);
 }
 
+#nav-search-form input {
+    color: var(--text-primary);
+}
+
+#nav-search-form input::placeholder {
+    color: var(--text-primary);
+    opacity: 1;
+}
+
 .navbar-collapse {
     background-color: var(--bg-secondary);
     z-index: 50;
