@@ -29,10 +29,16 @@
   border: none;
 }
 
-.hamburger-menu {
-    position: absolute;
-    top: 4rem;
-    max-width: 20rem;
+.filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hamburger {
+  margin-top: 64px;
+  margin-right: 1rem;
 }
 
 #search-form {

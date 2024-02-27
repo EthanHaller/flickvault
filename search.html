@@ -71,16 +71,20 @@
         </div>
     </nav>
 
-    <div class="search-container">
+    <div class="search-container filter">
         <div id="search-form-wrapper">
             <form id="search-form">
                 <input type="email" class="form-control" id="searchinput" placeholder="Search">
                 <button type="submit" class="btn nav-search">Search</button>
             </form>
         </div>
-        <div class="collapse position-fixed top-5 end-0 vh-100 hamburger-menu" id="navbarToggleExternalContent">
-            <div class="p-4 h-100 d-flex flex-column justify-content-center collapse-content">
-                <h2>Filter and Sort</h2>
+
+        <div class="offcanvas offcanvas-end w-25 hamburger" tabindex="-1" id="offcanvas" data-bs-theme="dark" data-bs-keyboard="false" data-bs-backdrop="false">
+            <div class="offcanvas-header">
+                <h3>Filter and Sort</h3>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
                 <div class="filter-section">
                     <h3>Genre</h3>
                     <div class="checkbox-group">
@@ -90,7 +94,6 @@
                             Adventure</label>
                         <label for="comedy"><input type="checkbox" id="comedy" name="genre" value="comedy">
                             Comedy</label>
-                        <!-- Add more genres as needed -->
                     </div>
                 </div>
 
@@ -100,7 +103,6 @@
                         <label for="g"><input type="checkbox" id="g" name="rating" value="g"> G</label>
                         <label for="pg"><input type="checkbox" id="pg" name="rating" value="pg"> PG</label>
                         <label for="pg-13"><input type="checkbox" id="pg-13" name="rating" value="pg-13"> PG-13</label>
-                        <!-- Add more ratings as needed -->
                     </div>
                 </div>
 
@@ -108,14 +110,11 @@
                 <input type="range" class="form-range" id="customRange1">
             </div>
         </div>
-        <div id="filter-sort" class="navbar position-absolute">
-            <div class="container-fluid">
-                <button class="" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent"
-                        aria-controls="navbarToggleExternalContent" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    Filter and Sort
-                </button>
-            </div>
+
+        <div>
+            <button class="btn nav-search" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button" style="padding-right: 4rem;">
+                Filter & Sort
+            </button>
         </div>
     </div>
 
