@@ -9,6 +9,7 @@ h2, h3, h4, h5 {
 }
 
 p {
+    font-family: "Inconsolata", monospace;
     color: var(--text-accent);
     margin: 0px;
 }
@@ -19,6 +20,7 @@ p {
 }
 
 .details-title {
+    font-family: "Inknut Antiqua", serif;
     font-size: 4rem;
     text-align: center;
 }
@@ -51,7 +53,7 @@ p {
     text-align: center;
     background-color: var(--bg-secondary);
     border-radius: 5px;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     padding: 1rem;
 }
 
