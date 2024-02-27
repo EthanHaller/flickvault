@@ -1,0 +1,32 @@
+.movie-card {
+    background-color: var(--bg-secondary);
+    color: white;
+    width: 16rem;
+}
+
+.movie-card-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.movie-card-grid {
+    display: grid;
+    gap: 2rem;  
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    padding: 2rem;
+}
+
+.movie-card-title {
+    font-family: "Inknut Antiqua", serif;
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 300;
+}
+
+.movie-card-text {
+    font-family: "Inconsolata", monospace;
+    font-size: 1.1rem;
+    font-style: normal;
+    font-weight: 300;
+}

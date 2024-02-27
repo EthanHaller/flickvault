@@ -8,13 +8,12 @@
 }
 
 body {
-    background-color: var(--bg-primary) !important;
+    background-color: var(--bg-primary);
 }
 
 nav {
-    height: 5rem;
     padding: 0.5rem 1rem;
-    background-color: var(--bg-secondary);
+    background-color: var(--bg-secondary) !important;
     display: flex;
     align-items: center;
 }
