@@ -1,0 +1,84 @@
+.details-poster {
+    height: calc(100vh - 5rem);
+    width: 100%;
+    object-fit: cover;
+}
+
+h2, h3, h4, h5 {
+    color: var(--text-primary);
+}
+
+p {
+    color: var(--text-accent);
+    margin: 0px;
+}
+
+.movie-details {
+    padding-inline: 2rem;
+    z-index: 5;
+}
+
+.details-title {
+    font-size: 4rem;
+    text-align: center;
+}
+
+.star {
+    color: var(--accent-yellow);
+}
+
+.details-stars {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    font-size: 2rem;
+}
+
+.details-year-rating-time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-secondary);
+    border-radius: 5px;
+}
+
+.details-year-rating-time p {
+    margin: 0.5rem 2rem;
+    font-size: 2rem;
+}
+
+.details-description {
+    text-align: center;
+    background-color: var(--bg-secondary);
+    border-radius: 5px;
+    font-size: 1.5rem;
+    padding: 1rem;
+}
+
+.details-genre {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.details-genre p {
+    font-size: 1rem;
+    background-color: var(--bg-secondary);
+    border-radius: 5px;
+    padding: 0.5rem 2rem;
+}
+
+.details-people {
+    display: flex;
+    background-color: var(--bg-secondary);
+    border-radius: 5px;
+    padding: 0.5rem 2rem;
+}
+
+@media screen and (max-width: 992px) {
+    .details-poster-wrapper {
+        position: fixed;
+        background-color: var(--bg-primary);
+        opacity: 0.05;
+    }
+}
