@@ -1,0 +1,28 @@
+.collapse-content {
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%);
+  }
+  
+  .collapse.show .collapse-content {
+    transform: translateX(0);
+  }
+  
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: white;
+}
+
+.checkbox-group label,
+.checkbox-group input[type="checkbox"] {
+    display: inline-block;
+    margin-right: 10px;
+    padding-left: 2rem;
+}
+
+
+.hamburger-menu {
+    max-width: 20rem;
+}
