@@ -54,14 +54,22 @@ class FlickVaultController {
             $command = "login";
 
         switch($command) {
+            case "history":
+                break;
+            case "home":
+                break;
             case "login":
                 $this->login();
                 break;
+            case "search":
+                break;
+            case "watchlist":
+                break;
             case "logout":
                 $this->logout();
-                // no break; logout will also show the welcome page.
+                // no break; logout will also show the login page.
             default:
-                $this->showLogin();
+                $this->showWelcome();
                 break;
         }
     }
@@ -89,7 +97,7 @@ class FlickVaultController {
             return;
         }
         $this->errorMessage = "Error logging in - Name and email is required";
-        $this->showLogin();
+        $this->showWelcome();
     }
 
     /**
@@ -149,7 +157,7 @@ class FlickVaultController {
             $this->errorMessage = "Name, email, and password are required.";
         }
         // If something went wrong, show the welcome page again
-        $this->showLogin();
+        $this->showWelcome();
     }
 
 
@@ -215,7 +223,7 @@ class FlickVaultController {
     /**
      * Show the welcome page to the user.
      */
-    public function showLogin() {
+    public function showWelcome() {
         // Show an optional error message if the errorMessage field
         // is not empty.
         $message = "";
