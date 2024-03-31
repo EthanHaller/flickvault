@@ -55,15 +55,19 @@ class FlickVaultController {
 
         switch($command) {
             case "history":
+                $this->showHistory();
                 break;
             case "home":
+                $this->showHome();
                 break;
             case "login":
                 $this->login();
                 break;
             case "search":
+                $this->showSearch();
                 break;
             case "watchlist":
+                $this->showWatchlist();
                 break;
             case "logout":
                 $this->logout();
@@ -93,7 +97,7 @@ class FlickVaultController {
             $_SESSION["name"] = $_POST["fullname"];
             $_SESSION["email"] = $_POST["email"];
             $_SESSION["score"] = 0;
-            header("Location: ?command=question");
+            header("Location: ?command=home");
             return;
         }
         $this->errorMessage = "Error logging in - Name and email is required";
@@ -207,22 +211,29 @@ class FlickVaultController {
     //     return false;
     // }
 
-    /**
-     * Show a question to the user.  This function loads a
-     * template PHP file and displays it to the user based on
-     * properties of this object and the SESSION information.
-     */
-    // public function showQuestion($message = "") {
-    //     $name = $_SESSION["name"];
-    //     $email = $_SESSION["email"];
-    //     $score = $_SESSION["score"];
-    //     $question = $this->getQuestion();
-    //     include("/opt/src/trivia/templates/question.php");
-    // }
+    # SHOW PAGES SECTION 
 
-    /**
-     * Show the welcome page to the user.
-     */
+    /* Show the history page to the user. */
+    public function showHistory() {
+        include("/opt/src/flickvault/templates/history.php");
+    }
+
+    /* Show the home page to the user. */
+    public function showHome() {
+        include("/opt/src/flickvault/templates/home.php");
+    }
+
+    /* Show the search page to the user. */
+    public function showSearch() {
+        include("/opt/src/flickvault/templates/search.php");
+    }
+
+    /* Show the watchlist page to the user. */
+    public function showWatchlist() {
+        include("/opt/src/flickvault/templates/watchlist.php");
+    }
+
+    /* Show the welcome page to the user. */
     public function showWelcome() {
         // Show an optional error message if the errorMessage field
         // is not empty.
@@ -230,7 +241,7 @@ class FlickVaultController {
         if (!empty($this->errorMessage)) {
             $message = "<div class='alert alert-danger'>{$this->errorMessage}</div>";
         }
-        include("/opt/src/flickvault/templates/login.php");
+        include("/opt/src/flickvault/templates/welcome.php");
     }
 
     /**
