@@ -52,7 +52,7 @@ class FlickVaultController {
         // are not trying to login (UPDATE!), then they
         // got here without going through the welcome page, so we
         // should send them back to the welcome page only.
-        if (!isset($_SESSION["name"]) && $command != "home")
+        if (!isset($_SESSION["name"]) && ($command != "login" && $command != "showSignup"))
             $command = "welcome";
 
         switch ($command) {
@@ -74,14 +74,14 @@ class FlickVaultController {
             case "watchlist":
                 $this->showWatchlist();
                 break;
-            case "createTables":
-                $this->createTables();
+            case "showSignup":
+                $this->showSignup();
                 break;
             case "logout":
                 $this->logout();
                 // no break; logout will also show the login page.
             default:
-                $this->showWelcome();
+                $this->showLogin();
                 break;
         }
     }
@@ -109,10 +109,9 @@ class FlickVaultController {
      * they are valid.
      */
     public function login() {
-        if (
-            isset($_POST["fullname"]) && isset($_POST["email"]) &&
-            !empty($_POST["fullname"]) && !empty($_POST["email"])
-        ) {
+        
+        if (isset($_POST["fullname"]) && isset($_POST["email"]) &&
+            !empty($_POST["fullname"]) && !empty($_POST["email"])) {
             $_SESSION["name"] = $_POST["fullname"];
             $_SESSION["email"] = $_POST["email"];
             $_SESSION["score"] = 0;
@@ -120,7 +119,7 @@ class FlickVaultController {
             return;
         }
         $this->errorMessage = "Error logging in - Name and email is required";
-        $this->showWelcome();
+        $this->showLogin();
     }
 
     /**
@@ -187,7 +186,7 @@ class FlickVaultController {
             $this->errorMessage = "Name, email, and password are required.";
         }
         // If something went wrong, show the welcome page again
-        $this->showWelcome();
+        $this->showLogin();
     }
 
 
@@ -287,15 +286,24 @@ class FlickVaultController {
     }
 
     /* Show the welcome page to the user. */
-    public function showWelcome() {
+    public function showLogin() {
         // Show an optional error message if the errorMessage field
         // is not empty.
-        $message = "";
+        $errorMessage = "";
         if (!empty($this->errorMessage)) {
-            $message = "<div class='alert alert-danger'>{$this->errorMessage}</div>";
+            $errorMessage = "<div class='alert alert-danger'>{$this->errorMessage}</div>";
         }
-        $message2 = "<div class='alert alert-danger'>{$this->user}</div>";
-        include("/opt/src/flickvault/templates/welcome.php");
+        include("/opt/src/flickvault/templates/login.php");
+    }
+
+    public function showSignup() {
+        // Show an optional error message if the errorMessage field
+        // is not empty.
+        $errorMessage = "";
+        if (!empty($this->errorMessage)) {
+            $errorMessage = "<div class='alert alert-danger'>{$this->errorMessage}</div>";
+        }
+        include("/opt/src/flickvault/templates/signup.php");
     }
 
     /**
