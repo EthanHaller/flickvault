@@ -4,11 +4,14 @@ class FlickVaultController {
 
     private $questions = [];
 
+
     private $db;
     private $input;
 
     // An error message to display on the welcome page
     private $errorMessage = "";
+
+    private $user = "";
 
     /**
      * Constructor
@@ -63,7 +66,7 @@ class FlickVaultController {
                 $this->showHome();
                 break;
             case "login":
-                $this->login();
+                $this->loginDatabase();
                 break;
             case "search":
                 $this->searchMovies($this->input["query"]);
@@ -84,6 +87,15 @@ class FlickVaultController {
         }
     }
 
+    public function createTables() {
+        $this->db->query("create table users (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            email VARCHAR(255) UNIQUE NOT NULL,
+            password VARCHAR(255) NOT NULL
+        );");
+    }
+
 
     public function login() {
         if (
@@ -99,7 +111,6 @@ class FlickVaultController {
             $_SESSION["email"] = $email;
             header("Location: ?command=home");
             return;
-            
         } else { // email or password not entered
             $this->errorMessage = "Error logging in - Email and password are required";
         }
@@ -165,6 +176,7 @@ class FlickVaultController {
 
             // Check if user is in database, by email
             $res = $this->db->query("select * from users where email = $1;", $_POST["email"]);
+            $this->user = $res;
             if (empty($res)) {
                 // User was not there (empty result), so insert them
                 $this->db->query(
@@ -178,8 +190,8 @@ class FlickVaultController {
                 $_SESSION["name"] = $_POST["fullname"];
                 $_SESSION["email"] = $_POST["email"];
                 $_SESSION["score"] = 0;
-                // Send user to the appropriate page (question)
-                header("Location: ?command=question");
+                // Send user to the appropriate page (home)
+                header("Location: ?command=home");
                 return;
             } else {
                 // User was in the database, verify password is correct
@@ -191,7 +203,7 @@ class FlickVaultController {
                     $_SESSION["name"] = $res[0]["name"];
                     $_SESSION["email"] = $res[0]["email"];
                     $_SESSION["score"] = $res[0]["score"];
-                    header("Location: ?command=question");
+                    header("Location: ?command=home");
                     return;
                 } else {
                     // Password was incorrect
