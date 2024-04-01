@@ -3,7 +3,7 @@
 class FlickVaultController {
 
     private $questions = [];
-    
+
     private $db;
     private $input;
 
@@ -18,7 +18,7 @@ class FlickVaultController {
         // of execution of PHP -- the constructor is the best place
         // to do that.
         session_start();
-        
+
         // Connect to the database by instantiating a
         // Database object (provided by CS4640).  You have a copy
         // in the src/example directory, but it will be below as well.
@@ -53,7 +53,7 @@ class FlickVaultController {
         if (!isset($_SESSION["name"]) && ($command != "login" && $command != "showSignup"))
             $command = "welcome";
 
-        switch($command) {
+        switch ($command) {
             case "details":
                 break;
             case "history":
@@ -84,31 +84,59 @@ class FlickVaultController {
         }
     }
 
-    /**
-     * Login Function
-     *
-     * This function checks that the user submitted the form and did not
-     * leave the name and email inputs empty.  If all is well, we set
-     * their information into the session and then send them to the 
-     * question page.  If all didn't go well, we set the class field
-     * errorMessage and show the welcome page again with that message.
-     *
-     * NOTE: This is the function we wrote in class!  It **should** also
-     * check more detailed information about the name/email to make sure
-     * they are valid.
-     */
+
     public function login() {
-        
-        if (isset($_POST["fullname"]) && isset($_POST["email"]) &&
-            !empty($_POST["fullname"]) && !empty($_POST["email"])) {
-            $_SESSION["name"] = $_POST["fullname"];
-            $_SESSION["email"] = $_POST["email"];
-            $_SESSION["score"] = 0;
+        if (
+            isset($_POST["email"]) && isset($_POST["password"]) &&
+            !empty($_POST["email"]) && !empty($_POST["password"])
+        ) {
+            $email = $_POST["email"];
+            $password = $_POST["password"];
+
+
+            // HANDLE LOGGING IN HERE IN DB
+
+            $_SESSION["email"] = $email;
             header("Location: ?command=home");
             return;
+            
+        } else { // email or password not entered
+            $this->errorMessage = "Error logging in - Email and password are required";
         }
-        $this->errorMessage = "Error logging in - Name and email is required";
-        $this->showWelcome();
+        // if validation fails, show login form
+        $this->showLogin();
+    }
+
+    public function signup() {
+        if (
+            isset($_POST["email"]) && isset($_POST["password"]) &&
+            !empty($_POST["email"]) && !empty($_POST["password"])
+        ) {
+            $email = $_POST["email"];
+            $password = $_POST["password"];
+
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) { // is email valid
+                // check password requirements
+                $passwordPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'; // contains uppercase, lowercase, number, and special character, and at least 8 characters long
+                if (preg_match($passwordPattern, $password)) { // is password valid
+
+                    // HANDLE SIGNING UP IN HERE IN DB
+                    // need to check if account already exists
+
+                    $_SESSION["email"] = $email;
+                    header("Location: ?command=home");
+                    return;
+                } else { // password is invalid
+                    $this->errorMessage = "Error logging in - Password must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be at least 8 characters long.";
+                }
+            } else { // email is invalid
+                $this->errorMessage = "Error logging in - Invalid email address";
+            }
+        } else { // email or password not entered
+            $this->errorMessage = "Error logging in - Email and password are required";
+        }
+        // if validation fails, show signup form
+        $this->showSignup();
     }
 
     /**
@@ -129,46 +157,52 @@ class FlickVaultController {
      */
     public function loginDatabase() {
         // User must provide a non-empty name, email, and password to attempt a login
-        if(isset($_POST["fullname"]) && !empty($_POST["fullname"]) &&
+        if (
+            isset($_POST["fullname"]) && !empty($_POST["fullname"]) &&
             isset($_POST["email"]) && !empty($_POST["email"]) &&
-            isset($_POST["passwd"]) && !empty($_POST["passwd"])) {
+            isset($_POST["passwd"]) && !empty($_POST["passwd"])
+        ) {
 
-                // Check if user is in database, by email
-                $res = $this->db->query("select * from users where email = $1;", $_POST["email"]);
-                if (empty($res)) {
-                    // User was not there (empty result), so insert them
-                    $this->db->query("insert into users (name, email, password, score) values ($1, $2, $3, $4);",
-                        $_POST["fullname"], $_POST["email"],
-                        // Use the hashed password!
-                        password_hash($_POST["passwd"], PASSWORD_DEFAULT), 0);
-                    $_SESSION["name"] = $_POST["fullname"];
-                    $_SESSION["email"] = $_POST["email"];
-                    $_SESSION["score"] = 0;
-                    // Send user to the appropriate page (question)
+            // Check if user is in database, by email
+            $res = $this->db->query("select * from users where email = $1;", $_POST["email"]);
+            if (empty($res)) {
+                // User was not there (empty result), so insert them
+                $this->db->query(
+                    "insert into users (name, email, password, score) values ($1, $2, $3, $4);",
+                    $_POST["fullname"],
+                    $_POST["email"],
+                    // Use the hashed password!
+                    password_hash($_POST["passwd"], PASSWORD_DEFAULT),
+                    0
+                );
+                $_SESSION["name"] = $_POST["fullname"];
+                $_SESSION["email"] = $_POST["email"];
+                $_SESSION["score"] = 0;
+                // Send user to the appropriate page (question)
+                header("Location: ?command=question");
+                return;
+            } else {
+                // User was in the database, verify password is correct
+                // Note: Since we used a 1-way hash, we must use password_verify()
+                // to check that the passwords match.
+                if (password_verify($_POST["passwd"], $res[0]["password"])) {
+                    // Password was correct, save their information to the
+                    // session and send them to the question page
+                    $_SESSION["name"] = $res[0]["name"];
+                    $_SESSION["email"] = $res[0]["email"];
+                    $_SESSION["score"] = $res[0]["score"];
                     header("Location: ?command=question");
                     return;
                 } else {
-                    // User was in the database, verify password is correct
-                    // Note: Since we used a 1-way hash, we must use password_verify()
-                    // to check that the passwords match.
-                    if (password_verify($_POST["passwd"], $res[0]["password"])) {
-                        // Password was correct, save their information to the
-                        // session and send them to the question page
-                        $_SESSION["name"] = $res[0]["name"];
-                        $_SESSION["email"] = $res[0]["email"];
-                        $_SESSION["score"] = $res[0]["score"];
-                        header("Location: ?command=question");
-                        return;
-                    } else {
-                        // Password was incorrect
-                        $this->errorMessage = "Incorrect password.";
-                    }
+                    // Password was incorrect
+                    $this->errorMessage = "Incorrect password.";
                 }
+            }
         } else {
             $this->errorMessage = "Name, email, and password are required.";
         }
         // If something went wrong, show the welcome page again
-        $this->showWelcome();
+        $this->showLogin();
     }
 
 
@@ -204,7 +238,7 @@ class FlickVaultController {
         $_SESSION['query'] = $this->input["query"];
         $_SESSION['searchResults'] = $data['results'];
     }
-    
+
     /**
      * Our getQuestion function, now as a method!
      */
@@ -222,7 +256,7 @@ class FlickVaultController {
     //         // Note: we should check that $qn here is _not_ false first!
     //         return $qn[0];
     //     }
-        
+
     //     // If an $id **was** passed in, then we should get that specific
     //     // question from the database.
     //     //
@@ -235,7 +269,7 @@ class FlickVaultController {
     //         }
     //         return $res[0];
     //     }
-       
+
     //     // Anything else, just return false
     //     return false;
     // }
@@ -273,7 +307,7 @@ class FlickVaultController {
         // is not empty.
         $errorMessage = "";
         if (!empty($this->errorMessage)) {
-            $errorMessage = "<div class='alert alert-danger'>{$this->errorMessage}</div>";
+            $errorMessage = "<div class='alert alert-danger col-lg-6 mx-auto mt-3'>{$this->errorMessage}</div>";
         }
         include("/opt/src/flickvault/templates/login.php");
     }
@@ -283,7 +317,7 @@ class FlickVaultController {
         // is not empty.
         $errorMessage = "";
         if (!empty($this->errorMessage)) {
-            $errorMessage = "<div class='alert alert-danger'>{$this->errorMessage}</div>";
+            $errorMessage = "<div class='alert alert-danger col-lg-6 mx-auto mt-3'>{$this->errorMessage}</div>";
         }
         include("/opt/src/flickvault/templates/signup.php");
     }
