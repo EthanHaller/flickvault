@@ -199,15 +199,22 @@ class FlickVaultController {
         $response = file_get_contents($url, false, $context);
         $movieJSON = json_decode($response, true);
 
-        $_SESSION['query'] = $this->input["query"];
-        $_SESSION['movieDetails'] = $movieJSON['results'];
+        $_SESSION['query'] = $this->input["movieId"];
+        $_SESSION['movieDetails'] = $movieJSON;
 
         $responseCredits = file_get_contents($urlCredits, false, $context);
         $creditsJSON = json_decode($responseCredits, true);
 
-        $directors = array_filter($creditsJSON['cast'], function ($cast) {
-            return $cast['job'] === 'Director';
-        });
+        // $directors = array_filter($creditsJSON['cast'], function ($person) {
+        //     if(isset($person['job']) && $person['job'] === "Director") {
+        //         return $person['name'];
+        //     }
+        // });
+        $directors = array_map(function ($director) {
+            if (isset($person['job']) && $person['job'] === "Director") {
+                return $person['name'];
+            }
+        }, $creditsJSON['cast']);
 
         $actors = array_slice($creditsJSON['cast'], 0, 3);
 

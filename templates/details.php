@@ -87,7 +87,7 @@
                         <p><?= $_SESSION['movieDetails']['overview']; ?></p>
                     </div>
                     <div class="details-genre mb-3">
-                        <?php foreach ($_SESSION['movieDetials']['genres'] as $genre) : ?>
+                        <?php foreach ($_SESSION['movieDetails']['genres'] as $genre) : ?>
                             <p><?= $genre['name'] ?></p>
                         <?php endforeach; ?>
                     </div>
@@ -100,7 +100,7 @@
                     <div class="details-people mb-3">
                         <p><strong>Actors:</strong></p>
                         <?php foreach ($_SESSION['actors'] as $actor) : ?>
-                            <?= $actor ?>
+                            <?= $actor['name'] ?>
                         <?php endforeach; ?>
                     </div>
                 </div>
