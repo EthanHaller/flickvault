@@ -87,16 +87,6 @@ class FlickVaultController {
         }
     }
 
-    public function createTables() {
-        $this->db->query("create table users (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(255) NOT NULL,
-            email VARCHAR(255) UNIQUE NOT NULL,
-            password VARCHAR(255) NOT NULL
-        );");
-    }
-
-
     public function login() {
         if (
             isset($_POST["email"]) && isset($_POST["password"]) &&
@@ -177,15 +167,20 @@ class FlickVaultController {
             $this->user = $res;
             if (empty($res)) {
                 // User was not there (empty result), so insert them
-                $this->db->query(
-                    "insert into users (email, password) values ($1, $2);",
-                    $_POST["email"],
-                    password_hash($_POST["passwd"], PASSWORD_DEFAULT) // Use the hashed password!
-                );
-                $_SESSION["email"] = $_POST["email"];
-                // Send user to the appropriate page (home)
-                header("Location: ?command=home");
-                return;
+                $passwordPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&]{8,}$/';
+                if (preg_match($passwordPattern, $_POST["passwd"])) {
+                    $this->db->query(
+                        "insert into users (email, password) values ($1, $2);",
+                        $_POST["email"],
+                        password_hash($_POST["passwd"], PASSWORD_DEFAULT) // Use the hashed password!
+                    );
+                    $_SESSION["email"] = $_POST["email"];
+                    // Send user to the appropriate page (home)
+                    header("Location: ?command=home");
+                    return;
+                } else {
+                    $this->errorMessage = "Password must have upper-case, lower-case, number, and special character";
+                }
             } else {
                 // User was in the database, verify password is correct
                 // Note: Since we used a 1-way hash, we must use password_verify()
