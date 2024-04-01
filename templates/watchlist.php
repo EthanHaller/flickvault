@@ -18,8 +18,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="../styles/watchlist.css">
-    <link rel="stylesheet" href="../styles/theme.css">
+    <link rel="stylesheet" href="styles/watchlist.css">
+    <link rel="stylesheet" href="styles/theme.css">
 
     <!-- Inter Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,35 +41,35 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
+    <header>
+        <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand nav-title" href="index.html">
-                <h1>FlickVault</h1>
+            <a class="navbar-brand nav-title" aria-current="page" href="?command=home">
+            <h1>FlickVault</h1>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="watchlist.html">Watch List</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="watch-history.html">Watch History</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="details.html">Details</a>
-                    </li>
-                </ul>
-                <form id="nav-search-form" class="d-flex" role="search" action="search.html" method="GET">
-                    <input class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search">
-                    <button class="btn nav-search" type="submit">Search</button>
-                </form>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                <a class="nav-link active" href="?command=watchlist">Watch List</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link active" href="?command=history">Watch History</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link active" href="?command=details">Details</a>
+                </li>
+            </ul>
+            <form id="nav-search-form" class="d-flex" role="search" action="?command=search" method="post">
+                <input class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search">
+                <button class="btn nav-search" type="submit">Search</button>
+            </form>
             </div>
         </div>
-    </nav>
+        </nav>
+    </header>
 
     <div class="container-fluid movie-card-grid">
         <div class="movie-card-container">

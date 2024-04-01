@@ -54,6 +54,8 @@ class FlickVaultController {
             $command = "login";
 
         switch($command) {
+            case "details":
+
             case "history":
                 $this->showHistory();
                 break;
@@ -212,6 +214,11 @@ class FlickVaultController {
     // }
 
     # SHOW PAGES SECTION 
+
+    /* Show the details page to the user. */
+    public function showDetails() {
+        include("/opt/src/flickvault/templates/details.php");
+    }
 
     /* Show the history page to the user. */
     public function showHistory() {
