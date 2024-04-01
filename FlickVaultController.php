@@ -3,12 +3,14 @@
 class FlickVaultController {
 
     private $questions = [];
-    
+
     private $db;
     private $input;
 
     // An error message to display on the welcome page
     private $errorMessage = "";
+
+    private $user = "";
 
     /**
      * Constructor
@@ -18,7 +20,7 @@ class FlickVaultController {
         // of execution of PHP -- the constructor is the best place
         // to do that.
         session_start();
-        
+
         // Connect to the database by instantiating a
         // Database object (provided by CS4640).  You have a copy
         // in the src/example directory, but it will be below as well.
@@ -50,10 +52,10 @@ class FlickVaultController {
         // are not trying to login (UPDATE!), then they
         // got here without going through the welcome page, so we
         // should send them back to the welcome page only.
-        if (!isset($_SESSION["name"]) && $command != "login")
-            $command = "login";
+        if (!isset($_SESSION["name"]) && $command != "home")
+            $command = "welcome";
 
-        switch($command) {
+        switch ($command) {
             case "details":
                 break;
             case "history":
@@ -63,7 +65,7 @@ class FlickVaultController {
                 $this->showHome();
                 break;
             case "login":
-                $this->login();
+                $this->loginDatabase();
                 break;
             case "search":
                 $this->searchMovies($this->input["query"]);
@@ -72,6 +74,9 @@ class FlickVaultController {
             case "watchlist":
                 $this->showWatchlist();
                 break;
+            case "createTables":
+                $this->createTables();
+                break;
             case "logout":
                 $this->logout();
                 // no break; logout will also show the login page.
@@ -79,6 +84,15 @@ class FlickVaultController {
                 $this->showWelcome();
                 break;
         }
+    }
+
+    public function createTables() {
+        $this->db->query("create table users (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            email VARCHAR(255) UNIQUE NOT NULL,
+            password VARCHAR(255) NOT NULL
+        );");
     }
 
     /**
@@ -95,8 +109,10 @@ class FlickVaultController {
      * they are valid.
      */
     public function login() {
-        if (isset($_POST["fullname"]) && isset($_POST["email"]) &&
-            !empty($_POST["fullname"]) && !empty($_POST["email"])) {
+        if (
+            isset($_POST["fullname"]) && isset($_POST["email"]) &&
+            !empty($_POST["fullname"]) && !empty($_POST["email"])
+        ) {
             $_SESSION["name"] = $_POST["fullname"];
             $_SESSION["email"] = $_POST["email"];
             $_SESSION["score"] = 0;
@@ -125,41 +141,48 @@ class FlickVaultController {
      */
     public function loginDatabase() {
         // User must provide a non-empty name, email, and password to attempt a login
-        if(isset($_POST["fullname"]) && !empty($_POST["fullname"]) &&
+        if (
+            isset($_POST["fullname"]) && !empty($_POST["fullname"]) &&
             isset($_POST["email"]) && !empty($_POST["email"]) &&
-            isset($_POST["passwd"]) && !empty($_POST["passwd"])) {
+            isset($_POST["passwd"]) && !empty($_POST["passwd"])
+        ) {
 
-                // Check if user is in database, by email
-                $res = $this->db->query("select * from users where email = $1;", $_POST["email"]);
-                if (empty($res)) {
-                    // User was not there (empty result), so insert them
-                    $this->db->query("insert into users (name, email, password, score) values ($1, $2, $3, $4);",
-                        $_POST["fullname"], $_POST["email"],
-                        // Use the hashed password!
-                        password_hash($_POST["passwd"], PASSWORD_DEFAULT), 0);
-                    $_SESSION["name"] = $_POST["fullname"];
-                    $_SESSION["email"] = $_POST["email"];
-                    $_SESSION["score"] = 0;
-                    // Send user to the appropriate page (question)
-                    header("Location: ?command=question");
+            // Check if user is in database, by email
+            $res = $this->db->query("select * from users where email = $1;", $_POST["email"]);
+            $this->user = $res;
+            if (empty($res)) {
+                // User was not there (empty result), so insert them
+                $this->db->query(
+                    "insert into users (name, email, password, score) values ($1, $2, $3, $4);",
+                    $_POST["fullname"],
+                    $_POST["email"],
+                    // Use the hashed password!
+                    password_hash($_POST["passwd"], PASSWORD_DEFAULT),
+                    0
+                );
+                $_SESSION["name"] = $_POST["fullname"];
+                $_SESSION["email"] = $_POST["email"];
+                $_SESSION["score"] = 0;
+                // Send user to the appropriate page (home)
+                header("Location: ?command=home");
+                return;
+            } else {
+                // User was in the database, verify password is correct
+                // Note: Since we used a 1-way hash, we must use password_verify()
+                // to check that the passwords match.
+                if (password_verify($_POST["passwd"], $res[0]["password"])) {
+                    // Password was correct, save their information to the
+                    // session and send them to the question page
+                    $_SESSION["name"] = $res[0]["name"];
+                    $_SESSION["email"] = $res[0]["email"];
+                    $_SESSION["score"] = $res[0]["score"];
+                    header("Location: ?command=home");
                     return;
                 } else {
-                    // User was in the database, verify password is correct
-                    // Note: Since we used a 1-way hash, we must use password_verify()
-                    // to check that the passwords match.
-                    if (password_verify($_POST["passwd"], $res[0]["password"])) {
-                        // Password was correct, save their information to the
-                        // session and send them to the question page
-                        $_SESSION["name"] = $res[0]["name"];
-                        $_SESSION["email"] = $res[0]["email"];
-                        $_SESSION["score"] = $res[0]["score"];
-                        header("Location: ?command=question");
-                        return;
-                    } else {
-                        // Password was incorrect
-                        $this->errorMessage = "Incorrect password.";
-                    }
+                    // Password was incorrect
+                    $this->errorMessage = "Incorrect password.";
                 }
+            }
         } else {
             $this->errorMessage = "Name, email, and password are required.";
         }
@@ -200,7 +223,7 @@ class FlickVaultController {
         $_SESSION['query'] = $this->input["query"];
         $_SESSION['searchResults'] = $data['results'];
     }
-    
+
     /**
      * Our getQuestion function, now as a method!
      */
@@ -218,7 +241,7 @@ class FlickVaultController {
     //         // Note: we should check that $qn here is _not_ false first!
     //         return $qn[0];
     //     }
-        
+
     //     // If an $id **was** passed in, then we should get that specific
     //     // question from the database.
     //     //
@@ -231,7 +254,7 @@ class FlickVaultController {
     //         }
     //         return $res[0];
     //     }
-       
+
     //     // Anything else, just return false
     //     return false;
     // }
@@ -271,6 +294,7 @@ class FlickVaultController {
         if (!empty($this->errorMessage)) {
             $message = "<div class='alert alert-danger'>{$this->errorMessage}</div>";
         }
+        $message2 = "<div class='alert alert-danger'>{$this->user}</div>";
         include("/opt/src/flickvault/templates/welcome.php");
     }
 
