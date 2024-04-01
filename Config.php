@@ -19,11 +19,4 @@ class Config {
         "pass" => "cs4640LocalUser!",
         "database" => "example"
     ];
-    // public static $db = [
-    //     "host" => "db",
-    //     "port" => 5432,
-    //     "user" => "vgn2bh",
-    //     "pass" => "0ljnZGRCTutK",
-    //     "database" => "vgn2bh"
-    // ];
 }

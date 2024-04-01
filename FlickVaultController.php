@@ -53,8 +53,8 @@ class FlickVaultController {
         // are not trying to login (UPDATE!), then they
         // got here without going through the welcome page, so we
         // should send them back to the welcome page only.
-        if (!isset($_SESSION["name"]) && ($command != "login" && $command != "showSignup"))
-            $command = "welcome";
+        if (!isset($_SESSION["email"]) && ($command != "login" && $command != "showSignup"))
+            $command = "login";
 
         switch ($command) {
             case "details":
@@ -167,29 +167,22 @@ class FlickVaultController {
      * are stored in the database.
      */
     public function loginDatabase() {
-        // User must provide a non-empty name, email, and password to attempt a login
+        // User must provide a non-empty email, and password to attempt a login
         if (
-            isset($_POST["fullname"]) && !empty($_POST["fullname"]) &&
             isset($_POST["email"]) && !empty($_POST["email"]) &&
             isset($_POST["passwd"]) && !empty($_POST["passwd"])
         ) {
-
             // Check if user is in database, by email
             $res = $this->db->query("select * from users where email = $1;", $_POST["email"]);
             $this->user = $res;
             if (empty($res)) {
                 // User was not there (empty result), so insert them
                 $this->db->query(
-                    "insert into users (name, email, password, score) values ($1, $2, $3, $4);",
-                    $_POST["fullname"],
+                    "insert into users (email, password) values ($1, $2);",
                     $_POST["email"],
-                    // Use the hashed password!
-                    password_hash($_POST["passwd"], PASSWORD_DEFAULT),
-                    0
+                    password_hash($_POST["passwd"], PASSWORD_DEFAULT) // Use the hashed password!
                 );
-                $_SESSION["name"] = $_POST["fullname"];
                 $_SESSION["email"] = $_POST["email"];
-                $_SESSION["score"] = 0;
                 // Send user to the appropriate page (home)
                 header("Location: ?command=home");
                 return;
@@ -200,9 +193,7 @@ class FlickVaultController {
                 if (password_verify($_POST["passwd"], $res[0]["password"])) {
                     // Password was correct, save their information to the
                     // session and send them to the question page
-                    $_SESSION["name"] = $res[0]["name"];
                     $_SESSION["email"] = $res[0]["email"];
-                    $_SESSION["score"] = $res[0]["score"];
                     header("Location: ?command=home");
                     return;
                 } else {
