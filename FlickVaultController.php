@@ -41,7 +41,7 @@ class FlickVaultController {
      */
     public function run() {
         // Get the command
-        $command = "login";
+        $command = "home";
         if (isset($this->input["command"]))
             $command = $this->input["command"];
 
@@ -55,7 +55,7 @@ class FlickVaultController {
 
         switch($command) {
             case "details":
-
+                break;
             case "history":
                 $this->showHistory();
                 break;
@@ -66,6 +66,7 @@ class FlickVaultController {
                 $this->login();
                 break;
             case "search":
+                $this->searchMovies($this->input["query"]);
                 $this->showSearch();
                 break;
             case "watchlist":
@@ -176,6 +177,28 @@ class FlickVaultController {
     public function logout() {
         session_destroy();
         session_start();
+    }
+
+    /**
+     * Queries TMDB api for movies based on search keywords
+     */
+    public function searchMovies($title) {
+        $url = 'https://api.themoviedb.org/3/search/movie?query=' . urlencode($title) . '&include_adult=true&language=en-US&sort_by=popularity.desc&page=1';
+
+        $options = [
+            'http' => [
+                'header' => "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZDMwYWE1ZmE5NjA4Y2YyMmMyMzdiMmE0ODQ1OTgwMiIsInN1YiI6IjY2MGEwZjFjNWFhZGM0MDE2MzYyNDliNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Di-tc-QndzycIwaPXsTPCAvuv1Si8GRDi7M4EtWQFlQ\r\n" .
+                    "accept: application/json\r\n",
+                'method' => 'GET'
+            ]
+        ];
+
+        $context = stream_context_create($options);
+        $response = file_get_contents($url, false, $context);
+        $data = json_decode($response, true);
+
+        $_SESSION['query'] = $this->input["query"];
+        $_SESSION['searchResults'] = $data['results'];
     }
     
     /**
