@@ -182,7 +182,37 @@ class FlickVaultController {
         $_SESSION['searchResults'] = $data['results'];
     }
 
-    public function getMovie($id) {
+    public function getMovie($movieId) {
+        $url = 'https://api.themoviedb.org/3/movie/' . urlencode($movieId) . '?language=en-US';
+
+        $urlCredits = 'https://api.themoviedb.org/3/movie/' . urlencode($movieId) . '/credits?language=en-US';
+
+        $options = [
+            'http' => [
+                'header' => "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZDMwYWE1ZmE5NjA4Y2YyMmMyMzdiMmE0ODQ1OTgwMiIsInN1YiI6IjY2MGEwZjFjNWFhZGM0MDE2MzYyNDliNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Di-tc-QndzycIwaPXsTPCAvuv1Si8GRDi7M4EtWQFlQ\r\n" .
+                    "accept: application/json\r\n",
+                'method' => 'GET'
+            ]
+        ];
+
+        $context = stream_context_create($options);
+        $response = file_get_contents($url, false, $context);
+        $movieJSON = json_decode($response, true);
+
+        $_SESSION['query'] = $this->input["query"];
+        $_SESSION['movieDetails'] = $movieJSON['results'];
+
+        $responseCredits = file_get_contents($urlCredits, false, $context);
+        $creditsJSON = json_decode($responseCredits, true);
+
+        $directors = array_filter($creditsJSON['cast'], function ($cast) {
+            return $cast['job'] === 'Director';
+        });
+
+        $actors = array_slice($creditsJSON['cast'], 0, 3);
+
+        $_SESSION['directors'] = $directors;
+        $_SESSION['actors'] = $actors;
     }
 
     /**
