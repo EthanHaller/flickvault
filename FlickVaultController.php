@@ -11,8 +11,6 @@ class FlickVaultController {
     // An error message to display on the welcome page
     private $errorMessage = "";
 
-    private $user = "";
-
     /**
      * Constructor
      */
@@ -56,8 +54,9 @@ class FlickVaultController {
         // are not trying to login (UPDATE!), then they
         // got here without going through the welcome page, so we
         // should send them back to the welcome page only.
-        if (!isset($_SESSION["email"]) && ($command != "login" && $command != "showSignup"))
+        if (!isset($_SESSION["email"])) {
             $command = "login";
+        }
 
         switch ($command) {
             case "details":
@@ -94,59 +93,6 @@ class FlickVaultController {
         }
     }
 
-    public function login() {
-        if (
-            isset($_POST["email"]) && isset($_POST["password"]) &&
-            !empty($_POST["email"]) && !empty($_POST["password"])
-        ) {
-            $email = $_POST["email"];
-            $password = $_POST["password"];
-
-
-            // HANDLE LOGGING IN HERE IN DB
-
-            $_SESSION["email"] = $email;
-            header("Location: ?command=home");
-            return;
-        } else { // email or password not entered
-            $this->errorMessage = "Error logging in - Email and password are required";
-        }
-        // if validation fails, show login form
-        $this->showLogin();
-    }
-
-    public function signup() {
-        if (
-            isset($_POST["email"]) && isset($_POST["password"]) &&
-            !empty($_POST["email"]) && !empty($_POST["password"])
-        ) {
-            $email = $_POST["email"];
-            $password = $_POST["password"];
-
-            if (filter_var($email, FILTER_VALIDATE_EMAIL)) { // is email valid
-                // check password requirements
-                $passwordPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'; // contains uppercase, lowercase, number, and special character, and at least 8 characters long
-                if (preg_match($passwordPattern, $password)) { // is password valid
-
-                    // HANDLE SIGNING UP IN HERE IN DB
-                    // need to check if account already exists
-
-                    $_SESSION["email"] = $email;
-                    header("Location: ?command=home");
-                    return;
-                } else { // password is invalid
-                    $this->errorMessage = "Error logging in - Password must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be at least 8 characters long.";
-                }
-            } else { // email is invalid
-                $this->errorMessage = "Error logging in - Invalid email address";
-            }
-        } else { // email or password not entered
-            $this->errorMessage = "Error logging in - Email and password are required";
-        }
-        // if validation fails, show signup form
-        $this->showSignup();
-    }
-
     /**
      * Alternate Login Function
      *
@@ -171,10 +117,9 @@ class FlickVaultController {
         ) {
             // Check if user is in database, by email
             $res = $this->db->query("select * from users where email = $1;", $_POST["email"]);
-            $this->user = $res;
             if (empty($res)) {
                 // User was not there (empty result), so insert them
-                $passwordPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&]{8,}$/';
+                $passwordPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/';
                 if (preg_match($passwordPattern, $_POST["passwd"])) {
                     $this->db->query(
                         "insert into users (email, password) values ($1, $2);",
