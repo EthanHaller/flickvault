@@ -167,25 +167,27 @@
         <h2 class="antiqua mb-3">Results</h2>
 
         <?php foreach ($_SESSION['searchResults'] as $movie) : ?>
-            <div class="search-result mb-4">
-                <img class="search-result-poster" src="https://image.tmdb.org/t/p/original<?= $movie['poster_path']; ?>" alt="Movie Poster">
-                <div class="search-result-details">
-                    <div class="result-title-year mb-1">
-                        <h3 class="result-title antiqua"><?= $movie['title']; ?></h3>
-                        <p class="result-year"><?= substr($movie['release_date'], 0, 4); ?></p>
+            <form class="mb-4" method="post" action="?command=details&movieId=<?= $movie['id']; ?>">
+                <button class="search-result card-clickable">
+                    <img class="search-result-poster" src="https://image.tmdb.org/t/p/original<?= $movie['poster_path']; ?>" alt="Movie Poster">
+                    <div class="search-result-details">
+                        <div class="result-title-year mb-1">
+                            <h3 class="result-title antiqua"><?= $movie['title']; ?></h3>
+                            <p class="result-year"><?= substr($movie['release_date'], 0, 4); ?></p>
+                        </div>
+                        <div class="result-rating-genre-time">
+                            <p class="result-rating">???</p>
+                            <p class="result-genre">???</p>
+                            <p class="reault-time">???</p>
+                        </div>
+                        <div class="result-stars">
+                            <span class="star">&starf;</span>
+                            <p><?= substr($movie['vote_average'], 0, 3); ?></p>
+                        </div>
+                        <p class="result-description mt-4"><?= $movie['overview'] ?></p>
                     </div>
-                    <div class="result-rating-genre-time">
-                        <p class="result-rating">???</p>
-                        <p class="result-genre">???</p>
-                        <p class="reault-time">???</p>
-                    </div>
-                    <div class="result-stars">
-                        <span class="star">&starf;</span>
-                        <p><?= substr($movie['vote_average'], 0, 3); ?></p>
-                    </div>
-                    <p class="result-description mt-4"><?= $movie['overview'] ?></p>
-                </div>
-            </div>
+                </button>
+            </form>
         <?php endforeach; ?>
 
         <!-- <div class="search-result mb-4">

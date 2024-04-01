@@ -48,6 +48,9 @@ class FlickVaultController {
         if (isset($this->input["command"]))
             $command = $this->input["command"];
 
+        if (isset($this->input["movieId"]))
+            $movieId = $this->input["movieId"];
+
         // NOTE: UPDATED 3/29/2024!!!!!
         // If the session doesn't have the key "name", AND they
         // are not trying to login (UPDATE!), then they
@@ -71,6 +74,10 @@ class FlickVaultController {
             case "search":
                 $this->searchMovies($this->input["query"]);
                 $this->showSearch();
+                break;
+            case "details":
+                $this->getMovie($movieId);
+                $this->showDetails();
                 break;
             case "watchlist":
                 $this->showWatchlist();
@@ -235,6 +242,10 @@ class FlickVaultController {
 
         $_SESSION['query'] = $this->input["query"];
         $_SESSION['searchResults'] = $data['results'];
+    }
+
+    public function getMovie($id) {
+        echo "movie id :" . $id;
     }
 
     /**
