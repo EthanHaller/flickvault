@@ -65,42 +65,49 @@
         </nav>`
     </header>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="details-poster-wrapper col-lg-4">
-                <img class="details-poster" src="https://image.tmdb.org/t/p/original/3bhkrj58Vtu7enYsRolD1fZdja1.jpg" alt="Movie Poster">
-            </div>
-            <div class="movie-details col-lg-8">
-                <h2 class="details-title mt-5">The Godfather</h2>
-                <div class="details-stars mb-5">
-                    <span class="star">&starf;</span>
-                    <p>9.2/10</p>
+    <?php if (isset($_SESSION['movieDetails'])) : ?>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="details-poster-wrapper col-lg-4">
+                    <img class="details-poster" src="https://image.tmdb.org/t/p/original/<?= $_SESSION['movieDetails']['poster_path']; ?>" alt="Movie Poster">
                 </div>
-                <div class="details-year-rating-time mb-5">
-                    <p>1972</p>
-                    <p>R</p>
-                    <p>2h 55m</p>
-                </div>
-                <div class="details-description mb-3">
-                    <p>The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to
-                        his reluctant son.</p>
-                </div>
-                <div class="details-genre mb-3">
-                    <p>Crime</p>
-                    <p>Drama</p>
-                </div>
-                <div class="details-people mb-3">
-                    <p><strong>Director: </strong>Francis Ford Coppola</p>
-                </div>
-                <div class="details-people mb-3">
-                    <p><strong>Writers: </strong>Mario Puzo, Francis Ford Coppola</p>
-                </div>
-                <div class="details-people mb-3">
-                    <p><strong>Actors: </strong>Marlon Brando, Al Pacino, James Caan</p>
+                <div class="movie-details col-lg-8">
+                    <h2 class="details-title mt-5"><?= $_SESSION['movieDetails']['title']; ?></h2>
+                    <div class="details-stars mb-5">
+                        <span class="star">&starf;</span>
+                        <p><?= substr($_SESSION['movieDetails']['poster_path'], 0, 3); ?></p>
+                    </div>
+                    <div class="details-year-rating-time mb-5">
+                        <p><?= substr($_SESSION['movieDetails']['release_date'], 0, 4); ?></p>
+                        <p>R</p>
+                        <p><?= $_SESSION['movieDetails']['runtime']; ?></p>
+                    </div>
+                    <div class="details-description mb-3">
+                        <p><?= $_SESSION['movieDetails']['overview']; ?></p>
+                    </div>
+                    <div class="details-genre mb-3">
+                        <?php foreach ($_SESSION['movieDetials']['genres'] as $genre) : ?>
+                            <p><?= $genre['name'] ?></p>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="details-people mb-3">
+                        <p><strong>Directors:</strong></p>
+                        <?php foreach ($_SESSION['directors'] as $director) : ?>
+                            <?= $director ?>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="details-people mb-3">
+                        <p><strong>Actors:</strong></p>
+                        <?php foreach ($_SESSION['actors'] as $actor) : ?>
+                            <?= $actor ?>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+    <?php endif ?>
 </body>
 
 </html>
