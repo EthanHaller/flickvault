@@ -50,8 +50,6 @@
       <input id="email-input" type="text" placeholder="Email" name="email" />
       <input id="password-input" type="password" placeholder="Password" name="passwd" />
       <button type="submit" class="btn mt-3 mb-5">Login</button>
-      <p>Don't have an account?</p>
-      <a href="?command=showSignup" class="mb-5">Create an account</a>
     </form>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
