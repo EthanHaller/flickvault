@@ -29,7 +29,7 @@
 
 <body>
     <?php
-        include('/opt/src/flickvault/templates/navbar.php');
+        include($filePath . '/flickvault/templates/navbar.php');
     ?>
 
     <?php if (isset($_SESSION['movieDetails'])) : ?>

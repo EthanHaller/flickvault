@@ -42,7 +42,7 @@
 <body>
     <header>
         <?php
-        include('/opt/src/flickvault/templates/navbar.php');
+        include($filePath . '/flickvault/templates/navbar.php');
         ?>
     </header>
 

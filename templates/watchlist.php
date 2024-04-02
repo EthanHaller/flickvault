@@ -42,7 +42,7 @@
 <body>
     <header>
         <?php
-        include('/opt/src/flickvault/templates/navbar.php');
+        include($filePath . '/flickvault/templates/navbar.php');
         ?>
     </header>
 
@@ -71,84 +71,6 @@
             </form>
 
         <?php endforeach; ?>
-
-        <!-- <div class="movie-card-container">
-            <div class="card movie-card text-center">
-                <div class="movie-card-text">2</div>
-                <img src="https://image.tmdb.org/t/p/w200/abW5AzHDaIK1n9C36VdAeOwORRA.jpg" alt="Interstellar">
-                <div class="card-body">
-                    <div class="movie-card-title">Cars</div>
-                    <div class="movie-card-text">1h 57m</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="movie-card-container">
-            <div class="card movie-card text-center">
-                <div class="movie-card-text">3</div>
-                <img src="https://image.tmdb.org/t/p/w200/aKuFiU82s5ISJpGZp7YkIr3kCUd.jpg" alt="Interstellar">
-                <div class="card-body">
-                    <div class="movie-card-title">Goodfellas</div>
-                    <div class="movie-card-text">2h 25m</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="movie-card-container">
-            <div class="card movie-card text-center">
-                <div class="movie-card-text">4</div>
-                <img src="https://image.tmdb.org/t/p/w200/3bhkrj58Vtu7enYsRolD1fZdja1.jpg" alt="Interstellar">
-                <div class="card-body">
-                    <div class="movie-card-title">The Godfather</div>
-                    <div class="movie-card-text">2h 55m</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="movie-card-container">
-            <div class="card movie-card text-center">
-                <div class="movie-card-text">5</div>
-                <img src="https://image.tmdb.org/t/p/w200/okIz1HyxeVOMzYwwHUjH2pHi74I.jpg" alt="Interstellar">
-                <div class="card-body">
-                    <div class="movie-card-title">Cars 2</div>
-                    <div class="movie-card-text">1h 46m</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="movie-card-container">
-            <div class="card movie-card text-center">
-                <div class="movie-card-text">6</div>
-                <img src="https://image.tmdb.org/t/p/w200/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" alt="Interstellar">
-                <div class="card-body">
-                    <div class="movie-card-title">Interstellar</div>
-                    <div class="movie-card-text">2h 49m</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="movie-card-container">
-            <div class="card movie-card text-center">
-                <div class="movie-card-text">7</div>
-                <img src="https://image.tmdb.org/t/p/w200/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" alt="Interstellar">
-                <div class="card-body">
-                    <div class="movie-card-title">Interstellar</div>
-                    <div class="movie-card-text">2h 49m</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="movie-card-container">
-            <div class="card movie-card text-center">
-                <div class="movie-card-text">8</div>
-                <img src="https://image.tmdb.org/t/p/w200/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" alt="Interstellar">
-                <div class="card-body">
-                    <div class="movie-card-title">Interstellar</div>
-                    <div class="movie-card-text">2h 49m</div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
