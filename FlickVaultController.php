@@ -86,6 +86,7 @@ class FlickVaultController {
                 break;
             case "removeFromWatchlist":
                 $this->removeFromWatchlist($this->input['movieId']);
+                header("Location: ?command=watchlist");
                 break;
             case "getUser":
                 $this->getUserData();
@@ -310,7 +311,7 @@ class FlickVaultController {
     /* Show the history page to the user. */
     public function showHistory() {
         $filePath = $this->filePath;
-        include($filePath . "flickvault/templates/history.php");
+        include($filePath . "/flickvault/templates/history.php");
     }
 
     /* Show the home page to the user. */
