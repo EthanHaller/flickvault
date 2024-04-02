@@ -78,7 +78,7 @@
 
         <?php foreach ($_SESSION['watchlist'] as $movie) : ?>
 
-            <form class="movie-card-container" method="post" action="?command=details&id=<?= $movie['movie_id']; ?>">
+            <form class="movie-card-container" method="post" action="?command=details&movieId=<?= $movie['movie_id']; ?>">
                 <div class="card movie-card text-center">
                     <button class="card-clickable" type="submit">
                         <div class="movie-card-text">1</div>
