@@ -47,12 +47,12 @@
     <?= $errorMessage ?>
     <form id="login-form" class="col-lg-6 mx-auto" method="post" action="?command=login">
       <h2 class="mt-5 mb-3">Login</h2>
-      <input id="email-input" type="text" placeholder="Email" name="email" />
+      <input id="email-input" type="email" placeholder="Email" name="email" />
       <input id="password-input" type="password" placeholder="Password" name="passwd" />
       <button type="submit" class="btn mt-3 mb-5">Login</button>
     </form>
   </div>
-  
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 

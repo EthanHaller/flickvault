@@ -81,6 +81,9 @@ class FlickVaultController {
             case "removeFromWatchlist":
                 $this->removeFromWatchlist($this->input['movieId']);
                 break;
+            case "getUser":
+                $this->getUserData();
+                break;
             case "logout":
                 $this->logout();
                 // no break; logout will also show the login page.
@@ -272,6 +275,20 @@ class FlickVaultController {
 
         $actors = array_slice($creditsJSON['cast'], 0, 3);
         $_SESSION['actors'] = $actors;
+    }
+
+    public function getUserData() {
+        $data = array(
+            "email" => $_SESSION["email"],
+            "id" => $_SESSION["userId"]
+        );
+
+        $userData = json_encode($data);
+
+        // Set the Content-Type header
+        header('Content-Type: application/json');
+
+        echo $userData;
     }
 
     # SHOW PAGES SECTION 
