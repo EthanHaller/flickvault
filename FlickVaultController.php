@@ -157,6 +157,13 @@ class FlickVaultController {
         session_start();
     }
 
+    /* Helper function to convert minutes to Xh Xm format */
+    public function formatMovieLength($minutes) {
+        $hours = floor($minutes / 60);
+        $mins = $minutes % 60;
+        return $hours . 'h ' . $mins . 'm';
+    }
+
     /* Queries TMDB API for movies based on search keywords */
     public function searchMovies($title) {
         $url = 'https://api.themoviedb.org/3/search/movie?query=' . urlencode($title) . '&include_adult=true&language=en-US&sort_by=popularity.desc&page=1';
@@ -197,6 +204,7 @@ class FlickVaultController {
 
         $_SESSION['query'] = $this->input["movieId"];
         $_SESSION['movieDetails'] = $movieJSON;
+        $_SESSION['movieDetails']['runtime'] = $this->formatMovieLength($_SESSION['movieDetails']['runtime']);
 
         $responseCredits = file_get_contents($urlCredits, false, $context);
         $creditsJSON = json_decode($responseCredits, true);
@@ -248,5 +256,4 @@ class FlickVaultController {
         }
         include("/opt/src/flickvault/templates/login.php");
     }
-
 }

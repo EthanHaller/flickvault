@@ -78,7 +78,7 @@
         <div id="search-form-wrapper">
             <form id="search-form" role="search" action="" method="get">
                 <input type="hidden" name="command" value="search">
-                <input type="search" class="form-control" name="query" placeholder="<?= !empty($_SESSION['query']) ? $_SESSION['query'] : "Search" ?>">
+                <input type="search" class="form-control" name="query" value="<?= !empty($_SESSION['query']) ? htmlspecialchars($_SESSION['query']) : "" ?>" placeholder="<?= empty($_SESSION['query']) ? "Search" : "" ?>">
                 <button type="submit" class="btn nav-search">Search</button>
             </form>
         </div>
@@ -165,7 +165,11 @@
                 <button class="search-result card-clickable" style="background-image: url('https://image.tmdb.org/t/p/original<?= $movie['backdrop_path']; ?>');">
                     <div class="overlay"></div>
                     <div class="search-result-poster-wrapper">
-                        <img class="search-result-poster" src="https://image.tmdb.org/t/p/original<?= $movie['poster_path']; ?>" alt="Movie Poster">
+                        <?php if ($movie['poster_path'] !== null) : ?>
+                            <img class="search-result-poster" src="https://image.tmdb.org/t/p/original<?= $movie['poster_path']; ?>" alt="Movie Poster">
+                        <?php else : ?>
+                            <div class="search-result-poster" style="visibility: hidden;"></div>
+                        <?php endif ?>
                     </div>
                     <div class="search-result-details">
                         <div class="result-title-year mb-1">

@@ -67,7 +67,11 @@
         <div class="container-fluid" style="padding-left: 0rem;">
             <div class="row">
                 <div class="details-poster-wrapper col-lg-4">
-                    <img class="details-poster" src="https://image.tmdb.org/t/p/original/<?= $_SESSION['movieDetails']['poster_path']; ?>" alt="Movie Poster">
+                    <?php if ($_SESSION['movieDetails']['poster_path'] !== null) : ?>
+                        <img class="details-poster" src="https://image.tmdb.org/t/p/original/<?= $_SESSION['movieDetails']['poster_path']; ?>" alt="Movie Poster">
+                    <?php else : ?>
+                        <img class="details-poster" style="display: none;" src="" alt="No Poster">
+                    <?php endif ?>
                 </div>
                 <div class="movie-details col-lg-8">
                     <h2 class="details-title mt-5"><?= $_SESSION['movieDetails']['title']; ?></h2>
@@ -78,7 +82,7 @@
                     <div class="details-year-rating-time mb-5">
                         <p><?= substr($_SESSION['movieDetails']['release_date'], 0, 4); ?></p>
                         <p>R</p>
-                        <p><?= $_SESSION['movieDetails']['runtime']; ?>m</p>
+                        <p><?= $_SESSION['movieDetails']['runtime']; ?></p>
                     </div>
                     <div class="details-description mb-3">
                         <p><?= $_SESSION['movieDetails']['overview']; ?></p>
