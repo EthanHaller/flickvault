@@ -186,7 +186,7 @@ class FlickVaultController {
     }
 
     public function removeFromWatchlist($movieId) {
-        $res = $this->db->query("delete from watchlist where user_id = (select id from users where email = $1) and movie_id = $2", $_SESSION['email'], $movieId);
+        $res = $this->db->query("delete from watchlist where user_id = $1 and movie_id = $2", $_SESSION['userId'], $movieId);
         // what do we do after removing
         // users can remove a movie from the details page and from the watchlist page, so do we redirect them somewhere after?
     }
@@ -199,7 +199,7 @@ class FlickVaultController {
     }
 
     public function removeFromHistory($movieId) {
-        $res = $this->db->query("delete from history where user_id = (select id from users where email = $1) and movie_id = $2", $_SESSION['email'], $movieId);
+        $res = $this->db->query("delete from history where user_id = $1 and movie_id = $2", $_SESSION['userId'], $movieId);
         // what do we do after removing
     }
 
