@@ -169,7 +169,7 @@ class FlickVaultController {
     }
 
     public function getWatchlist() {
-        $watchlist = $this->db->query("select watchlist.* from watchlist join users on watchlist.user_id = $1", $_SESSION['userId']);
+        $watchlist = $this->db->query("select * from watchlist where user_id = $1", $_SESSION['userId']);
         $_SESSION['watchlist'] = $watchlist;
     }
 
@@ -248,6 +248,7 @@ class FlickVaultController {
         $_SESSION['query'] = $this->input["movieId"];
         $_SESSION['movieDetails'] = $movieJSON;
         $_SESSION['movieDetails']['runtime'] = $this->formatMovieLength($_SESSION['movieDetails']['runtime']);
+        $_SESSION['movieDetails']['poster_path'] = 'https://image.tmdb.org/t/p/original' . $_SESSION['movieDetails']['runtime'];
 
         $responseCredits = file_get_contents($urlCredits, false, $context);
         $creditsJSON = json_decode($responseCredits, true);
