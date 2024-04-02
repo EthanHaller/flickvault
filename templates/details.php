@@ -44,9 +44,6 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="?command=history">Watch History</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="?command=details">Details</a>
-                    </li>
                 </ul>
                 <form id="nav-search-form" class="d-flex" role="search" action="" method="get">
                     <input type="hidden" name="command" value="search">

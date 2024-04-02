@@ -57,9 +57,6 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="?command=history">Watch History</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="?command=details">Details</a>
-                        </li>
                     </ul>
 
                     <div class="nav-item active ms-5">
