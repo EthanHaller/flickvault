@@ -2,8 +2,9 @@
 
 class FlickVaultController {
 
-    private $questions = [];
-
+    // File paths for docker and server deployments
+    // private $filePath = "/opt/src"; // dev
+    private $filePath = "/students/vgn2bh/students/vgn2bh/private"; // server
 
     private $db;
     private $input;
@@ -302,27 +303,27 @@ class FlickVaultController {
 
     /* Show the details page to the user. */
     public function showDetails() {
-        include("/opt/src/flickvault/templates/details.php");
+        include($this->filePath . "/flickvault/templates/details.php");
     }
 
     /* Show the history page to the user. */
     public function showHistory() {
-        include("/opt/src/flickvault/templates/history.php");
+        include($this->filePath . "flickvault/templates/history.php");
     }
 
     /* Show the home page to the user. */
     public function showHome() {
-        include("/opt/src/flickvault/templates/home.php");
+        include($this->filePath . "/flickvault/templates/home.php");
     }
 
     /* Show the search page to the user. */
     public function showSearch() {
-        include("/opt/src/flickvault/templates/search.php");
+        include($this->filePath . "/flickvault/templates/search.php");
     }
 
     /* Show the watchlist page to the user. */
     public function showWatchlist() {
-        include("/opt/src/flickvault/templates/watchlist.php");
+        include($this->filePath . "/flickvault/templates/watchlist.php");
     }
 
     /* Show the welcome page to the user. */
@@ -332,6 +333,6 @@ class FlickVaultController {
         if (!empty($this->errorMessage)) {
             $errorMessage = "<div class='alert alert-danger col-lg-6 mx-auto mt-3'>{$this->errorMessage}</div>";
         }
-        include("/opt/src/flickvault/templates/login.php");
+        include($this->filePath . "/flickvault/templates/login.php");
     }
 }
