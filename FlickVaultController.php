@@ -68,7 +68,7 @@ class FlickVaultController {
                 $this->loginDatabase();
                 break;
             case "search":
-                $this->searchMovies($this->input["query"]);
+                $this->searchMovies();
                 $this->showSearch();
                 break;
             case "watchlist":
@@ -219,8 +219,8 @@ class FlickVaultController {
     }
 
     /* Queries TMDB API for movies based on search keywords */
-    public function searchMovies($title) {
-        $url = 'https://api.themoviedb.org/3/search/movie?query=' . urlencode($title) . '&include_adult=true&language=en-US&sort_by=popularity.desc&page=1';
+    public function searchMovies() {
+        $url = 'https://api.themoviedb.org/3/search/movie?query=' . urlencode($_GET['query']) . '&include_adult=true&language=en-US&sort_by=popularity.desc&page=1';
 
         $options = [
             'http' => [
