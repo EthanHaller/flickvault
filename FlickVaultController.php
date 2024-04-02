@@ -174,11 +174,13 @@ class FlickVaultController {
     }
 
     public function getHistory() {
-        $history = $this->db->query("select history.* from history join users on history.user_id = $1", $_SESSION['userId']);
+        $history = $this->db->query("select * from history where user_id = $1", $_SESSION['userId']);
         $_SESSION['history'] = $history;
     }
 
     public function addToWatchlist($movieId, $movieTitle, $movieLength, $moviePoster) {
+        // check if in watchlist first
+
         $res = $this->db->query("insert into watchlist (user_id, movie_id, title, length, posterpath) values ($1, $2, $3, $4, $5)", $_SESSION['userId'], $movieId, $movieTitle, $movieLength, $moviePoster);
         // what do we do after
     }
@@ -190,7 +192,9 @@ class FlickVaultController {
     }
 
     public function addToHistory($movieId, $movieTitle, $movieLength, $moviePoster) {
-        $res = $this->db->query("insert into history (user_id, movie_id, title, length, posterpath) values ($1, $2, $3, $4, $5)", $_SESSION['userId'], $movieId, $movieTitle, $movieLength, $moviePoster);
+        // check if in history first
+
+        $res = $this->db->query("insert into history (user_id, movie_id, title, length, posterpath) values ((select id from users where email = $1), $2, $3, $4, $5)", $_SESSION['email'], $movieId, $movieTitle, $movieLength, $moviePoster);
         // what do we do after
     }
 

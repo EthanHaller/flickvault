@@ -104,7 +104,7 @@
                         <?php endforeach; ?>
                     </div>
                     <!-- add to watchlist button -->
-                    <form method="post" action="?command=addToWatchlist&movieId=<?= $_SESSION['movieDetails']['id']; ?>&movieTitle=<?= $_SESSION['movieDetails']['title']; ?>&movieLength=<?= $_SESSION['movieDetails']['runtime']; ?>&moviePoster=<?= $_SESSION['movieDetails']['poster_path']; ?>">
+                    <form method="post" action="?command=addToWatchlist&movieId=<?= $_SESSION['movieDetails']['id']; ?>&movieTitle=<?= $_SESSION['movieDetails']['title']; ?>&movieLength=<?= $_SESSION['movieDetails']['runtime']; ?>&moviePoster=https://image.tmdb.org/t/p/original/<?= $_SESSION['movieDetails']['poster_path']; ?>">
                         <button type="submit">Add to Watchlist</button>
                     </form>
                 </div>
