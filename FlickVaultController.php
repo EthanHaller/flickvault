@@ -74,9 +74,6 @@ class FlickVaultController {
             case "watchlist":
                 $this->showWatchlist();
                 break;
-            case "showSignup":
-                $this->showSignup();
-                break;
             case "logout":
                 $this->logout();
                 // no break; logout will also show the login page.
@@ -293,16 +290,6 @@ class FlickVaultController {
             $errorMessage = "<div class='alert alert-danger col-lg-6 mx-auto mt-3'>{$this->errorMessage}</div>";
         }
         include("/opt/src/flickvault/templates/login.php");
-    }
-
-    public function showSignup() {
-        // Show an optional error message if the errorMessage field
-        // is not empty.
-        $errorMessage = "";
-        if (!empty($this->errorMessage)) {
-            $errorMessage = "<div class='alert alert-danger col-lg-6 mx-auto mt-3'>{$this->errorMessage}</div>";
-        }
-        include("/opt/src/flickvault/templates/signup.php");
     }
 
     /**
