@@ -169,33 +169,33 @@ class FlickVaultController {
     }
 
     public function getWatchlist() {
-        $watchlist = $this->db->query("select watchlist.* from watchlist join users on watchlist.user_id = users.id where users.email = $1", $_SESSION['email']);
+        $watchlist = $this->db->query("select watchlist.* from watchlist join users on watchlist.user_id = $1", $_SESSION['userId']);
         $_SESSION['watchlist'] = $watchlist;
     }
 
     public function getHistory() {
-        $history = $this->db->query("select history.* from history join users on history.user_id = users.id where users.email = $1", $_SESSION['email']);
+        $history = $this->db->query("select history.* from history join users on history.user_id = $1", $_SESSION['userId']);
         $_SESSION['history'] = $history;
     }
 
     public function addToWatchlist($movieId, $movieTitle, $movieLength, $moviePoster) {
-        $res = $this->db->query("insert into watchlist (user_id, movie_id, title, length, posterpath) values ((select id from users where email = $1), $2, $3, $4, $5)", $_SESSION['userId'], $movieId, $movieTitle, $movieLength, $moviePoster);
+        $res = $this->db->query("insert into watchlist (user_id, movie_id, title, length, posterpath) values ($1, $2, $3, $4, $5)", $_SESSION['userId'], $movieId, $movieTitle, $movieLength, $moviePoster);
         // what do we do after
     }
 
     public function removeFromWatchlist($movieId) {
-        $res = $this->db->query("delete from watchlist where user_id = (select id from users where email = $1) and movie_id = $2", $_SESSION['email'], $movieId);
+        $res = $this->db->query("delete from watchlist where user_id = $1 and movie_id = $2", $_SESSION['userId'], $movieId);
         // what do we do after removing
         // users can remove a movie from the details page and from the watchlist page, so do we redirect them somewhere after?
     }
 
     public function addToHistory($movieId, $movieTitle, $movieLength, $moviePoster) {
-        $res = $this->db->query("insert into history (user_id, movie_id, title, length, posterpath) values ((select id from users where email = $1), $2, $3, $4, $5)", $_SESSION['email'], $movieId, $movieTitle, $movieLength, $moviePoster);
+        $res = $this->db->query("insert into history (user_id, movie_id, title, length, posterpath) values ($1, $2, $3, $4, $5)", $_SESSION['userId'], $movieId, $movieTitle, $movieLength, $moviePoster);
         // what do we do after
     }
 
     public function removeFromHistory($movieId) {
-        $res = $this->db->query("delete from history where user_id = (select id from users where email = $1) and movie_id = $2", $_SESSION['email'], $movieId);
+        $res = $this->db->query("delete from history where user_id = $1 and movie_id = $2", $_SESSION['userId'], $movieId);
         // what do we do after removing
     }
 
