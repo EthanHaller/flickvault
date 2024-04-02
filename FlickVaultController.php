@@ -208,14 +208,13 @@ class FlickVaultController {
         //     }
         // });
         $directors = array_map(function ($director) {
-            if (isset($person['job']) && $person['job'] === "Director") {
-                return $person['name'];
+            if (isset($director['job']) && $director['job'] === "Director") {
+                return $director['name'];
             }
-        }, $creditsJSON['cast']);
+        }, $creditsJSON['crew']);
+        $_SESSION['directors'] = $directors;
 
         $actors = array_slice($creditsJSON['cast'], 0, 3);
-
-        $_SESSION['directors'] = $directors;
         $_SESSION['actors'] = $actors;
     }
 
