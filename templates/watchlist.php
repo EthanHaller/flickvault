@@ -78,16 +78,26 @@
     </header>
 
     <div class="container-fluid movie-card-grid">
-        <div class="movie-card-container">
+        <form class="movie-card-container" method="post" action="?command=details&id........">
             <div class="card movie-card text-center">
-                <div class="movie-card-text">1</div>
-                <img src="https://image.tmdb.org/t/p/w200/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" alt="Interstellar">
-                <div class="card-body">
-                    <div class="movie-card-title">Interstellar</div>
-                    <div class="movie-card-text">2h 49m</div>
+                <button class="card-clickable" type="submit">
+                    <div class="movie-card-text">1</div>
+                    <img src="https://image.tmdb.org/t/p/w200/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" alt="Interstellar">
+                    <div class="card-body">
+                        <div class="movie-card-title">Interstellar</div>
+                        <div class="movie-card-text">2h 49m</div>
+                    </div>
+                </button>
+                <div class="card-footer">
+                    <form method="post" action="?command=moveToHistory&id.........">
+                        <button id="move-to-history-btn" class="card-action" type="submit">Move to History</button>
+                    </form>
+                    <form method="post" action="?command=removeFromWatchlist&id.........">
+                        <button id="remove-from-watchlist-btn" class="card-action" type="submit">Remove from Watchlist</button>
+                    </form>
                 </div>
             </div>
-        </div>
+        </form>
 
         <div class="movie-card-container">
             <div class="card movie-card text-center">

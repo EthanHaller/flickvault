@@ -72,6 +72,7 @@ class FlickVaultController {
                 $this->showSearch();
                 break;
             case "watchlist":
+                $this->getWatchlist();
                 $this->showWatchlist();
                 break;
             case "showSignup":
@@ -182,6 +183,13 @@ class FlickVaultController {
         $_SESSION['searchResults'] = $data['results'];
     }
 
+
+    public function getWatchlist() {
+        $watchlist = $this->db->query("select * from watchlist where user_id = $1", $_SESSION['email']);
+        print_r($watchlist);
+    }
+
+
     public function getMovie($movieId) {
         $url = 'https://api.themoviedb.org/3/movie/' . urlencode($movieId) . '?language=en-US';
 
@@ -214,41 +222,6 @@ class FlickVaultController {
         $_SESSION['directors'] = $directors;
         $_SESSION['actors'] = $actors;
     }
-
-    /**
-     * Our getQuestion function, now as a method!
-     */
-    // public function getQuestion($id=null) {
-
-    //     // If $id is not set, then get a random question
-    //     // We wrote this in class.
-    //     if ($id === null) {
-    //         // Read ONE random question from the database
-    //         $qn = $this->db->query("select * from questions order by random() limit 1;");
-
-    //         // The query function calls pg_fetch_all, which returns an **array of arrays**.
-    //         // That means that if we only have one row in our result, it's an array at
-    //         // position 0 of the array of arrays.
-    //         // Note: we should check that $qn here is _not_ false first!
-    //         return $qn[0];
-    //     }
-
-    //     // If an $id **was** passed in, then we should get that specific
-    //     // question from the database.
-    //     //
-    //     // NOTE: We did **not** write this in class, but it is provided/updated
-    //     // below:
-    //     if (is_numeric($id)) {
-    //         $res = $this->db->query("select * from questions where id = $1;", $id);
-    //         if (empty($res)) {
-    //             return false;
-    //         }
-    //         return $res[0];
-    //     }
-
-    //     // Anything else, just return false
-    //     return false;
-    // }
 
     # SHOW PAGES SECTION 
 
