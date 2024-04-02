@@ -158,6 +158,37 @@ class FlickVaultController {
         session_start();
     }
 
+    public function getWatchlist() {
+        $watchlist = $this->db->query("select watchlist.* from watchlist join users on watchlist.user_id = users.id where users.email = $1", $_SESSION['email']);
+        $_SESSION['watchlist'] = $watchlist;
+    }
+
+    public function getHistory() {
+        $history = $this->db->query("select history.* from history join users on history.user_id = users.id where users.email = $1", $_SESSION['email']);
+        $_SESSION['history'] = $history;
+    }
+
+    public function addToWatchlist($movieId, $movieTitle, $movieLength, $moviePoster) {
+        $res = $this->db->query("insert into watchlist (user_id, movie_id, title, length, posterpath) values ((select id from users where email = $1), $2, $3, $4, $5)", $_SESSION['email'], $movieId, $movieTitle, $movieLength, $moviePoster);
+        // what do we do after
+    }
+
+    public function removeFromWatchlist($movieId) {
+        $res = $this->db->query("delete from watchlist where user_id = (select id from users where email = $1) and movie_id = $2", $_SESSION['email'], $movieId);
+        // what do we do after removing
+        // users can remove a movie from the details page and from the watchlist page, so do we redirect them somewhere after?
+    }
+
+    public function addToHistory($movieId, $movieTitle, $movieLength, $moviePoster) {
+        $res = $this->db->query("insert into history (user_id, movie_id, title, length, posterpath) values ((select id from users where email = $1), $2, $3, $4, $5)", $_SESSION['email'], $movieId, $movieTitle, $movieLength, $moviePoster);
+        // what do we do after
+    }
+
+    public function removeFromHistory($movieId) {
+        $res = $this->db->query("delete from history where user_id = (select id from users where email = $1) and movie_id = $2", $_SESSION['email'], $movieId);
+        // what do we do after removing
+    }
+
     /**
      * Queries TMDB api for movies based on search keywords
      */
@@ -178,12 +209,6 @@ class FlickVaultController {
 
         $_SESSION['query'] = $this->input["query"];
         $_SESSION['searchResults'] = $data['results'];
-    }
-
-
-    public function getWatchlist() {
-        $watchlist = $this->db->query("select * from watchlist where user_id = $1", $_SESSION['email']);
-        print_r($watchlist);
     }
 
 
@@ -263,35 +288,4 @@ class FlickVaultController {
         }
         include("/opt/src/flickvault/templates/login.php");
     }
-
-    /**
-     * Check the user's answer to a question.
-     */
-    // public function answerQuestion() {
-    //     $message = "";
-    //     if (isset($_POST["questionid"]) && is_numeric($_POST["questionid"])) {
-
-    //         $question = $this->getQuestion($_POST["questionid"]);
-
-    //         if (strtolower(trim($_POST["answer"])) == strtolower($question["answer"])) {
-    //             $message = "<div class=\"alert alert-success\" role=\"alert\">
-    //                 Correct!
-    //                 </div>";
-    //             // Update the score in the session
-    //             $_SESSION["score"] += 10;
-
-    //             // **NEW**: We'll update the user's score in the database, too!
-    //             $this->db->query("update users set score = $1 where email = $2;", 
-    //                                 $_SESSION["score"], $_SESSION["email"]);
-    //         }
-    //         else {
-    //             $message = "<div class=\"alert alert-danger\" role=\"alert\">
-    //                 Incorrect! The correct answer was: {$question["answer"]}
-    //                 </div>";
-    //         }
-    //     }
-
-    //     $this->showQuestion($message);
-    // }
-
 }

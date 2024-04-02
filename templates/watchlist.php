@@ -78,26 +78,31 @@
     </header>
 
     <div class="container-fluid movie-card-grid">
-        <form class="movie-card-container" method="post" action="?command=details&id........">
-            <div class="card movie-card text-center">
-                <button class="card-clickable" type="submit">
-                    <div class="movie-card-text">1</div>
-                    <img src="https://image.tmdb.org/t/p/w200/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" alt="Interstellar">
-                    <div class="card-body">
-                        <div class="movie-card-title">Interstellar</div>
-                        <div class="movie-card-text">2h 49m</div>
+
+        <?php foreach ($_SESSION['watchlist'] as $movie) : ?>
+
+            <form class="movie-card-container" method="post" action="?command=details&id=<?= $movie['movie_id']; ?>">
+                <div class="card movie-card text-center">
+                    <button class="card-clickable" type="submit">
+                        <div class="movie-card-text">1</div>
+                        <img src="<?= $movie['posterpath']; ?>" alt="Interstellar">
+                        <div class="card-body">
+                            <div class="movie-card-title"><?= $movie['title']; ?></div>
+                            <div class="movie-card-text"><?= $movie['length']; ?></div>
+                        </div>
+                    </button>
+                    <div class="card-footer">
+                        <form method="post" action="?command=moveToHistory&id=<?= $movie['movie_id']; ?>">
+                            <button id="move-to-history-btn" class="card-action" type="submit">Move to History</button>
+                        </form>
+                        <form method="post" action="?command=removeFromWatchlist&id=<?= $movie['movie_id']; ?>">
+                            <button id="remove-from-watchlist-btn" class="card-action" type="submit">Remove from Watchlist</button>
+                        </form>
                     </div>
-                </button>
-                <div class="card-footer">
-                    <form method="post" action="?command=moveToHistory&id.........">
-                        <button id="move-to-history-btn" class="card-action" type="submit">Move to History</button>
-                    </form>
-                    <form method="post" action="?command=removeFromWatchlist&id.........">
-                        <button id="remove-from-watchlist-btn" class="card-action" type="submit">Remove from Watchlist</button>
-                    </form>
                 </div>
-            </div>
-        </form>
+            </form>
+
+        <?php endforeach; ?>
 
         <div class="movie-card-container">
             <div class="card movie-card text-center">
