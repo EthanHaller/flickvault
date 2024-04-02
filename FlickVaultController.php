@@ -189,9 +189,14 @@ class FlickVaultController {
         // what do we do after removing
     }
 
-    /**
-     * Queries TMDB api for movies based on search keywords
-     */
+    /* Helper function to convert minutes to Xh Xm format */
+    public function formatMovieLength($minutes) {
+        $hours = floor($minutes / 60);
+        $mins = $minutes % 60;
+        return $hours . 'h ' . $mins . 'm';
+    }
+
+    /* Queries TMDB API for movies based on search keywords */
     public function searchMovies($title) {
         $url = 'https://api.themoviedb.org/3/search/movie?query=' . urlencode($title) . '&include_adult=true&language=en-US&sort_by=popularity.desc&page=1';
 
@@ -212,6 +217,7 @@ class FlickVaultController {
     }
 
 
+    /* Queries TMDB API for movie details based on the movie ID */
     public function getMovie($movieId) {
         $url = 'https://api.themoviedb.org/3/movie/' . urlencode($movieId) . '?language=en-US';
 
@@ -231,15 +237,11 @@ class FlickVaultController {
 
         $_SESSION['query'] = $this->input["movieId"];
         $_SESSION['movieDetails'] = $movieJSON;
+        $_SESSION['movieDetails']['runtime'] = $this->formatMovieLength($_SESSION['movieDetails']['runtime']);
 
         $responseCredits = file_get_contents($urlCredits, false, $context);
         $creditsJSON = json_decode($responseCredits, true);
 
-        // $directors = array_filter($creditsJSON['cast'], function ($person) {
-        //     if(isset($person['job']) && $person['job'] === "Director") {
-        //         return $person['name'];
-        //     }
-        // });
         $directors = array_map(function ($director) {
             if (isset($director['job']) && $director['job'] === "Director") {
                 return $director['name'];
@@ -280,8 +282,7 @@ class FlickVaultController {
 
     /* Show the welcome page to the user. */
     public function showLogin() {
-        // Show an optional error message if the errorMessage field
-        // is not empty.
+        // Show an optional error message if the errorMessage field is not empty.
         $errorMessage = "";
         if (!empty($this->errorMessage)) {
             $errorMessage = "<div class='alert alert-danger col-lg-6 mx-auto mt-3'>{$this->errorMessage}</div>";
