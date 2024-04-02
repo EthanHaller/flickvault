@@ -61,11 +61,6 @@
                             <a class="nav-link active" href="?command=details">Details</a>
                         </li>
                     </ul>
-                    <!-- <form id="nav-search-form" class="d-flex" role="search" action="" method="get">
-                        <input type="hidden" name="command" value="search">
-                        <input class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search">
-                        <button class="btn nav-search" type="submit">Search</button>
-                    </form> -->
 
                     <div class="nav-item active ms-5">
                         <a href="?command=logout" class="btn btn-danger rounded-circle p-2" style="width: 40px; height: 40px;">
@@ -186,52 +181,6 @@
                 </button>
             </form>
         <?php endforeach; ?>
-
-        <!-- <div class="search-result mb-4">
-            <img class="search-result-poster" src="https://image.tmdb.org/t/p/original/3bhkrj58Vtu7enYsRolD1fZdja1.jpg" alt="Movie Poster">
-            <div class="search-result-details">
-                <div class="result-title-year mb-1">
-                    <h3 class="result-title antiqua">The Godfather</h3>
-                    <p class="result-year">1972</p>
-                </div>
-                <div class="result-rating-genre-time">
-                    <p class="result-rating">R</p>
-                    <p class="result-genre">Crime/Genre</p>
-                    <p class="reault-time">2h 55m</p>
-                </div>
-                <div class="result-stars">
-                    <span class="star">&starf;</span>
-                    <p>9.2/10</p>
-                </div>
-                <p class="result-description mt-4">
-                    The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his
-                    reluctant son.
-                </p>
-            </div>
-        </div>
-
-        <div class="search-result mb-4">
-            <img class="search-result-poster" src="https://image.tmdb.org/t/p/original/3bhkrj58Vtu7enYsRolD1fZdja1.jpg" alt="Movie Poster">
-            <div class="search-result-details">
-                <div class="result-title-year mb-1">
-                    <h3 class="result-title antiqua">The Godfather</h3>
-                    <p class="result-year">1972</p>
-                </div>
-                <div class="result-rating-genre-time">
-                    <p class="result-rating">R</p>
-                    <p class="result-genre">Crime/Genre</p>
-                    <p class="reault-time">2h 55m</p>
-                </div>
-                <div class="result-stars">
-                    <span class="star">&starf;</span>
-                    <p>9.2/10</p>
-                </div>
-                <p class="result-description mt-4">
-                    The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his
-                    reluctant son.
-                </p>
-            </div>
-        </div> -->
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

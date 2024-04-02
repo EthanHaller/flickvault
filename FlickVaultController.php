@@ -157,9 +157,7 @@ class FlickVaultController {
         session_start();
     }
 
-    /**
-     * Queries TMDB api for movies based on search keywords
-     */
+    /* Queries TMDB API for movies based on search keywords */
     public function searchMovies($title) {
         $url = 'https://api.themoviedb.org/3/search/movie?query=' . urlencode($title) . '&include_adult=true&language=en-US&sort_by=popularity.desc&page=1';
 
@@ -179,6 +177,7 @@ class FlickVaultController {
         $_SESSION['searchResults'] = $data['results'];
     }
 
+    /* Queries TMDB API for movie details based on the movie ID */
     public function getMovie($movieId) {
         $url = 'https://api.themoviedb.org/3/movie/' . urlencode($movieId) . '?language=en-US';
 
@@ -202,11 +201,6 @@ class FlickVaultController {
         $responseCredits = file_get_contents($urlCredits, false, $context);
         $creditsJSON = json_decode($responseCredits, true);
 
-        // $directors = array_filter($creditsJSON['cast'], function ($person) {
-        //     if(isset($person['job']) && $person['job'] === "Director") {
-        //         return $person['name'];
-        //     }
-        // });
         $directors = array_map(function ($director) {
             if (isset($director['job']) && $director['job'] === "Director") {
                 return $director['name'];
@@ -217,41 +211,6 @@ class FlickVaultController {
         $actors = array_slice($creditsJSON['cast'], 0, 3);
         $_SESSION['actors'] = $actors;
     }
-
-    /**
-     * Our getQuestion function, now as a method!
-     */
-    // public function getQuestion($id=null) {
-
-    //     // If $id is not set, then get a random question
-    //     // We wrote this in class.
-    //     if ($id === null) {
-    //         // Read ONE random question from the database
-    //         $qn = $this->db->query("select * from questions order by random() limit 1;");
-
-    //         // The query function calls pg_fetch_all, which returns an **array of arrays**.
-    //         // That means that if we only have one row in our result, it's an array at
-    //         // position 0 of the array of arrays.
-    //         // Note: we should check that $qn here is _not_ false first!
-    //         return $qn[0];
-    //     }
-
-    //     // If an $id **was** passed in, then we should get that specific
-    //     // question from the database.
-    //     //
-    //     // NOTE: We did **not** write this in class, but it is provided/updated
-    //     // below:
-    //     if (is_numeric($id)) {
-    //         $res = $this->db->query("select * from questions where id = $1;", $id);
-    //         if (empty($res)) {
-    //             return false;
-    //         }
-    //         return $res[0];
-    //     }
-
-    //     // Anything else, just return false
-    //     return false;
-    // }
 
     # SHOW PAGES SECTION 
 
@@ -282,43 +241,12 @@ class FlickVaultController {
 
     /* Show the welcome page to the user. */
     public function showLogin() {
-        // Show an optional error message if the errorMessage field
-        // is not empty.
+        // Show an optional error message if the errorMessage field is not empty.
         $errorMessage = "";
         if (!empty($this->errorMessage)) {
             $errorMessage = "<div class='alert alert-danger col-lg-6 mx-auto mt-3'>{$this->errorMessage}</div>";
         }
         include("/opt/src/flickvault/templates/login.php");
     }
-
-    /**
-     * Check the user's answer to a question.
-     */
-    // public function answerQuestion() {
-    //     $message = "";
-    //     if (isset($_POST["questionid"]) && is_numeric($_POST["questionid"])) {
-
-    //         $question = $this->getQuestion($_POST["questionid"]);
-
-    //         if (strtolower(trim($_POST["answer"])) == strtolower($question["answer"])) {
-    //             $message = "<div class=\"alert alert-success\" role=\"alert\">
-    //                 Correct!
-    //                 </div>";
-    //             // Update the score in the session
-    //             $_SESSION["score"] += 10;
-
-    //             // **NEW**: We'll update the user's score in the database, too!
-    //             $this->db->query("update users set score = $1 where email = $2;", 
-    //                                 $_SESSION["score"], $_SESSION["email"]);
-    //         }
-    //         else {
-    //             $message = "<div class=\"alert alert-danger\" role=\"alert\">
-    //                 Incorrect! The correct answer was: {$question["answer"]}
-    //                 </div>";
-    //         }
-    //     }
-
-    //     $this->showQuestion($message);
-    // }
 
 }

@@ -15,7 +15,7 @@
     <meta property="og:description" content="FlickVault Movie Details Page">
     <meta property="og:site_name" content="CS4640">
 
-    <title>FlickVault | Movie Details</title>
+    <title>FlickVault | Details</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
