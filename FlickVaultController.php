@@ -75,9 +75,6 @@ class FlickVaultController {
                 $this->getWatchlist();
                 $this->showWatchlist();
                 break;
-            case "showSignup":
-                $this->showSignup();
-                break;
             case "logout":
                 $this->logout();
                 // no break; logout will also show the login page.
@@ -207,19 +204,25 @@ class FlickVaultController {
         $response = file_get_contents($url, false, $context);
         $movieJSON = json_decode($response, true);
 
-        $_SESSION['query'] = $this->input["query"];
-        $_SESSION['movieDetails'] = $movieJSON['results'];
+        $_SESSION['query'] = $this->input["movieId"];
+        $_SESSION['movieDetails'] = $movieJSON;
 
         $responseCredits = file_get_contents($urlCredits, false, $context);
         $creditsJSON = json_decode($responseCredits, true);
 
-        $directors = array_filter($creditsJSON['cast'], function ($cast) {
-            return $cast['job'] === 'Director';
-        });
+        // $directors = array_filter($creditsJSON['cast'], function ($person) {
+        //     if(isset($person['job']) && $person['job'] === "Director") {
+        //         return $person['name'];
+        //     }
+        // });
+        $directors = array_map(function ($director) {
+            if (isset($director['job']) && $director['job'] === "Director") {
+                return $director['name'];
+            }
+        }, $creditsJSON['crew']);
+        $_SESSION['directors'] = $directors;
 
         $actors = array_slice($creditsJSON['cast'], 0, 3);
-
-        $_SESSION['directors'] = $directors;
         $_SESSION['actors'] = $actors;
     }
 
@@ -259,16 +262,6 @@ class FlickVaultController {
             $errorMessage = "<div class='alert alert-danger col-lg-6 mx-auto mt-3'>{$this->errorMessage}</div>";
         }
         include("/opt/src/flickvault/templates/login.php");
-    }
-
-    public function showSignup() {
-        // Show an optional error message if the errorMessage field
-        // is not empty.
-        $errorMessage = "";
-        if (!empty($this->errorMessage)) {
-            $errorMessage = "<div class='alert alert-danger col-lg-6 mx-auto mt-3'>{$this->errorMessage}</div>";
-        }
-        include("/opt/src/flickvault/templates/signup.php");
     }
 
     /**
