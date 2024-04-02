@@ -78,6 +78,9 @@ class FlickVaultController {
             case "addToWatchlist":
                 $this->addToWatchlist($this->input["movieId"], $this->input["movieTitle"], $this->input["movieLength"], $this->input["moviePoster"]);
                 break;
+            case "removeFromWatchlist":
+                $this->removeFromWatchlist($this->input['movieId']);
+                break;
             case "logout":
                 $this->logout();
                 // no break; logout will also show the login page.
@@ -122,13 +125,15 @@ class FlickVaultController {
                         password_hash($_POST["passwd"], PASSWORD_DEFAULT) // Use the hashed password!
                     );
 
-                    // Query new user id and email and save to session
-                    $newUser = $this->db->query("select * from users where email = $1;", $_POST["email"]);
-                    $_SESSION["email"] = $newUser['email'];
-                    $_SESSION['userId'] = $newUser['id'];
+                    // Save email to session
+                    $_SESSION["email"] = $_POST["email"];
 
                     // Send user to the appropriate page (home)
                     header("Location: ?command=home");
+
+                    // figure out how to set userId to session for new user
+                    // $newUser = $this->db->query("select * from users where email = $1;", $_POST["email"]);
+                    // $_SESSION['userId'] = $newUser['id'];
                     return;
                 } else {
                     $this->errorMessage = "Password must have upper-case, lower-case, number, and special character";

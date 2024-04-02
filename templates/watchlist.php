@@ -75,13 +75,12 @@
     </header>
 
     <div class="container-fluid movie-card-grid">
-
         <?php foreach ($_SESSION['watchlist'] as $movie) : ?>
 
             <form class="movie-card-container" method="post" action="?command=details&movieId=<?= $movie['movie_id']; ?>">
                 <div class="card movie-card text-center">
                     <button class="card-clickable" type="submit">
-                        <div class="movie-card-text">1</div>
+                        <div class="movie-card-text"><?= $movie['list_order']; ?></div>
                         <img src="<?= $movie['posterpath']; ?>" alt="Interstellar">
                         <div class="card-body">
                             <div class="movie-card-title"><?= $movie['title']; ?></div>
@@ -92,7 +91,7 @@
                         <form method="post" action="?command=moveToHistory&id=<?= $movie['movie_id']; ?>">
                             <button id="move-to-history-btn" class="card-action" type="submit">Move to History</button>
                         </form>
-                        <form method="post" action="?command=removeFromWatchlist&id=<?= $movie['movie_id']; ?>">
+                        <form method="post" action="?command=removeFromWatchlist&movieId=<?= $movie['movie_id']; ?>">
                             <button id="remove-from-watchlist-btn" class="card-action" type="submit">Remove from Watchlist</button>
                         </form>
                     </div>
