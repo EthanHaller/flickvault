@@ -77,6 +77,11 @@ class FlickVaultController {
                 break;
             case "addToWatchlist":
                 $this->addToWatchlist($this->input["movieId"], $this->input["movieTitle"], $this->input["movieLength"], $this->input["moviePoster"]);
+                header("Location: ?command=watchlist");
+                break;
+            case "addToHistory":
+                $this->addToHistory($this->input["movieId"], $this->input["movieTitle"], $this->input["movieLength"], $this->input["moviePoster"]);
+                header("Location: ?command=history");
                 break;
             case "removeFromWatchlist":
                 $this->removeFromWatchlist($this->input['movieId']);
@@ -188,9 +193,10 @@ class FlickVaultController {
 
     public function addToWatchlist($movieId, $movieTitle, $movieLength, $moviePoster) {
         // check if in watchlist first
-
-        $res = $this->db->query("insert into watchlist (user_id, movie_id, title, length, posterpath) values ($1, $2, $3, $4, $5)", $_SESSION['userId'], $movieId, $movieTitle, $movieLength, $moviePoster);
-        // what do we do after
+        $res = $this->db->query("select * from watchlist where user_id = $1 and movie_id = $2", $_SESSION['userId'], $movieId);
+        if (empty($res)) {
+            $res = $this->db->query("insert into watchlist (user_id, movie_id, title, length, posterpath) values ($1, $2, $3, $4, $5)", $_SESSION['userId'], $movieId, $movieTitle, $movieLength, $moviePoster);
+        }
     }
 
     public function removeFromWatchlist($movieId) {
@@ -201,9 +207,10 @@ class FlickVaultController {
 
     public function addToHistory($movieId, $movieTitle, $movieLength, $moviePoster) {
         // check if in history first
-
-        $res = $this->db->query("insert into history (user_id, movie_id, title, length, posterpath) values ((select id from users where email = $1), $2, $3, $4, $5)", $_SESSION['email'], $movieId, $movieTitle, $movieLength, $moviePoster);
-        // what do we do after
+        $res = $this->db->query("select * from history where user_id = $1 and movie_id = $2", $_SESSION['userId'], $movieId);
+        if (empty($res)) {
+            $res = $this->db->query("insert into history (user_id, movie_id, title, length, posterpath) values ($1, $2, $3, $4, $5)", $_SESSION['userId'], $movieId, $movieTitle, $movieLength, $moviePoster);
+        }
     }
 
     public function removeFromHistory($movieId) {
