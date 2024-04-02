@@ -75,6 +75,9 @@ class FlickVaultController {
                 $this->getWatchlist();
                 $this->showWatchlist();
                 break;
+            case "addToWatchlist":
+                $this->addToWatchlist($this->input["movieId"], $this->input["movieTitle"], $this->input["movieLength"], $this->input["moviePoster"]);
+                break;
             case "logout":
                 $this->logout();
                 // no break; logout will also show the login page.
@@ -112,12 +115,18 @@ class FlickVaultController {
                 // User was not there (empty result), so insert them
                 $passwordPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/';
                 if (preg_match($passwordPattern, $_POST["passwd"])) {
+                    // Insert new user into DB
                     $this->db->query(
                         "insert into users (email, password) values ($1, $2);",
                         $_POST["email"],
                         password_hash($_POST["passwd"], PASSWORD_DEFAULT) // Use the hashed password!
                     );
-                    $_SESSION["email"] = $_POST["email"];
+
+                    // Query new user id and email and save to session
+                    $newUser = $this->db->query("select * from users where email = $1;", $_POST["email"]);
+                    $_SESSION["email"] = $newUser['email'];
+                    $_SESSION['userId'] = $newUser['id'];
+
                     // Send user to the appropriate page (home)
                     header("Location: ?command=home");
                     return;
@@ -130,8 +139,9 @@ class FlickVaultController {
                 // to check that the passwords match.
                 if (password_verify($_POST["passwd"], $res[0]["password"])) {
                     // Password was correct, save their information to the
-                    // session and send them to the question page
+                    // session and send them to the home page
                     $_SESSION["email"] = $res[0]["email"];
+                    $_SESSION["userId"] = $res[0]["id"];
                     header("Location: ?command=home");
                     return;
                 } else {
@@ -169,7 +179,7 @@ class FlickVaultController {
     }
 
     public function addToWatchlist($movieId, $movieTitle, $movieLength, $moviePoster) {
-        $res = $this->db->query("insert into watchlist (user_id, movie_id, title, length, posterpath) values ((select id from users where email = $1), $2, $3, $4, $5)", $_SESSION['email'], $movieId, $movieTitle, $movieLength, $moviePoster);
+        $res = $this->db->query("insert into watchlist (user_id, movie_id, title, length, posterpath) values ((select id from users where email = $1), $2, $3, $4, $5)", $_SESSION['userId'], $movieId, $movieTitle, $movieLength, $moviePoster);
         // what do we do after
     }
 
