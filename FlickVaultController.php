@@ -252,7 +252,8 @@ class FlickVaultController {
         $_SESSION['query'] = $this->input["movieId"];
         $_SESSION['movieDetails'] = $movieJSON;
         $_SESSION['movieDetails']['runtime'] = $this->formatMovieLength($_SESSION['movieDetails']['runtime']);
-        $_SESSION['movieDetails']['poster_path'] = 'https://image.tmdb.org/t/p/original' . $_SESSION['movieDetails']['runtime'];
+        $_SESSION['movieDetails']['poster_path'] = 'https://image.tmdb.org/t/p/original' . $_SESSION['movieDetails']['poster_path'];
+        $_SESSION['movieDetails']['backdrop_path'] = 'https://image.tmdb.org/t/p/original' . $_SESSION['movieDetails']['poster_path'];
 
         $responseCredits = file_get_contents($urlCredits, false, $context);
         $creditsJSON = json_decode($responseCredits, true);

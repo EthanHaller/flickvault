@@ -65,7 +65,7 @@
             <div class="row">
                 <div class="details-poster-wrapper col-lg-4">
                     <?php if ($_SESSION['movieDetails']['poster_path'] !== null) : ?>
-                        <img class="details-poster" src="https://image.tmdb.org/t/p/original/<?= $_SESSION['movieDetails']['poster_path']; ?>" alt="Movie Poster">
+                        <img class="details-poster" src="<?= $_SESSION['movieDetails']['poster_path']; ?>" alt="Movie Poster">
                     <?php else : ?>
                         <img class="details-poster" style="display: none;" src="" alt="No Poster">
                     <?php endif ?>
