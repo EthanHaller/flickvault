@@ -303,36 +303,42 @@ class FlickVaultController {
 
     /* Show the details page to the user. */
     public function showDetails() {
-        include($this->filePath . "/flickvault/templates/details.php");
+        $filePath = $this->filePath;
+        include($filePath . "/flickvault/templates/details.php");
     }
 
     /* Show the history page to the user. */
     public function showHistory() {
-        include($this->filePath . "flickvault/templates/history.php");
+        $filePath = $this->filePath;
+        include($filePath . "flickvault/templates/history.php");
     }
 
     /* Show the home page to the user. */
     public function showHome() {
-        include($this->filePath . "/flickvault/templates/home.php");
+        $filePath = $this->filePath;
+        include($filePath . "/flickvault/templates/home.php");
     }
 
     /* Show the search page to the user. */
     public function showSearch() {
-        include($this->filePath . "/flickvault/templates/search.php");
+        $filePath = $this->filePath;
+        include($filePath . "/flickvault/templates/search.php");
     }
 
     /* Show the watchlist page to the user. */
     public function showWatchlist() {
-        include($this->filePath . "/flickvault/templates/watchlist.php");
+        $filePath = $this->filePath;
+        include($filePath . "/flickvault/templates/watchlist.php");
     }
 
     /* Show the welcome page to the user. */
     public function showLogin() {
+        $filePath = $this->filePath;
         // Show an optional error message if the errorMessage field is not empty.
         $errorMessage = "";
         if (!empty($this->errorMessage)) {
             $errorMessage = "<div class='alert alert-danger col-lg-6 mx-auto mt-3'>{$this->errorMessage}</div>";
         }
-        include($this->filePath . "/flickvault/templates/login.php");
+        include($filePath . "/flickvault/templates/login.php");
     }
 }
