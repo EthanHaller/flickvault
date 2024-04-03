@@ -198,14 +198,18 @@ class FlickVaultController {
         // check if in watchlist first
         $res = $this->db->query("select * from watchlist where user_id = $1 and movie_id = $2", $_SESSION['userId'], $movieId);
         if (empty($res)) {
-            $res = $this->db->query("insert into watchlist (user_id, movie_id, title, length, posterpath) values ($1, $2, $3, $4, $5)", $_SESSION['userId'], $movieId, $movieTitle, $movieLength, $moviePoster);
+            $res = $this->db->query("insert into watchlist (user_id, movie_id, title, length, posterpath, order_id) values ($1, $2, $3, $4, $5, $6)", $_SESSION['userId'], $movieId, $movieTitle, $movieLength, $moviePoster, count($_SESSION['watchlist'])+1);
         }
     }
 
+    /* */
     public function removeFromWatchlist($movieId) {
-        $res = $this->db->query("delete from watchlist where user_id = $1 and movie_id = $2", $_SESSION['userId'], $movieId);
-        // what do we do after removing
-        // users can remove a movie from the details page and from the watchlist page, so do we redirect them somewhere after?
+        $res = $this->db->query("select * from watchlist where user_id = $1 and movie_id = $2", $_SESSION['userId'], $movieId);
+        
+        // Shift the order_id of all movies after current up one
+        $this->db->query("update watchlist set order_id = order_id - 1 where user_id = $1 and order_id > $2", $_SESSION['userId'], $res[0]['order_id']);
+
+        $this->db->query("delete from watchlist where user_id = $1 and movie_id = $2", $_SESSION['userId'], $movieId);        
     }
 
     public function addToHistory($movieId, $movieTitle, $movieLength, $moviePoster) {
