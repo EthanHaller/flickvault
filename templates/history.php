@@ -56,54 +56,35 @@
 
     <div class="container-fluid movie-card-grid">
         <?php foreach ($_SESSION['history'] as $movie) : ?>
-<!-- 
-            <form class="movie-card-container" method="post" action="?command=details&movieId=<?= $movie['movie_id']; ?>">
-                <div class="card movie-card text-center">
-                    <button class="card-clickable" type="submit">
-                        <div class="movie-card-text"><?= $movie['list_order']; ?></div>
-                        <img src="<?= $movie['posterpath']; ?>" alt="Interstellar">
-                        <div class="card-body">
-                            <div class="movie-card-title"><?= $movie['title']; ?></div>
-                            <div class="movie-card-text"><?= $movie['length']; ?></div>
-                        </div>
-                    </button>
-                    <div class="card-footer">
-                        <form method="post" action="?command=moveToHistory&id=<?= $movie['movie_id']; ?>">
-                            <button id="move-to-history-btn" class="card-action" type="submit">Move to History</button>
-                        </form>
-                        <form method="post" action="?command=removeFromWatchlist&movieId=<?= $movie['movie_id']; ?>">
-                            <button id="remove-from-watchlist-btn" class="card-action" type="submit">Remove from Watchlist</button>
-                        </form>
-                    </div>
-                </div>
-            </form> -->
 
-            <form class="movie-card-container" method="post" action="?command=details&movieId=<?= $movie['movie_id']; ?>">
+            <div class="movie-card-container">
                 <div class="card movie-card text-center">
-                    <button class="card-clickable" type="submit">
-                        <img src="<?= $movie['posterpath']; ?>" class="card-img-top" alt="Interstellar">
-                        <div class="card-body">
-                            <div class="movie-card-title"><?= $movie['title']; ?></div>
-                            <!-- <div class="star-rating">
+                    <form method="post" action="?command=details&movieId=<?= $movie['movie_id']; ?>">
+                        <button class="card-clickable" type="submit">
+                            <img src="<?= $movie['posterpath']; ?>" class="card-img-top" alt="<?= $movie['title']; ?>">
+                            <div class="card-body">
+                                <div class="movie-card-title"><?= $movie['title']; ?></div>
+                                <!-- <div class="star-rating">
                             <span class="star-filled">&#9733;</span>
                             <span class="star-filled">&#9733;</span>
                             <span class="star-filled">&#9733;</span>
                             <span class="star-filled">&#9733;</span>
                             <span>&#9733;</span>
                         </div> -->
-                            <div class="movie-card-watch-date">Watched on <?= $movie['date_watched']; ?></div>
-                        </div>
-                    </button>
+                                <div class="movie-card-watch-date">Watched on <?= $movie['date_watched']; ?></div>
+                            </div>
+                        </button>
+                    </form>
                     <div class="card-footer">
-                        <form method="post" action="?command=moveToHistory&id=<?= $movie['movie_id']; ?>">
+                        <form method="post" action="?command=moveToWatchlist&movieId=<?= $_SESSION['movieDetails']['id']; ?>&movieTitle=<?= $_SESSION['movieDetails']['title']; ?>&movieLength=<?= $_SESSION['movieDetails']['runtime']; ?>&moviePoster=https://image.tmdb.org/t/p/original/<?= $_SESSION['movieDetails']['poster_path']; ?>">
                             <button id="move-to-watchlist-btn" class="card-action" type="submit">Move to Watchlist</button>
                         </form>
-                        <form method="post" action="?command=removeFromWatchlist&movieId=<?= $movie['movie_id']; ?>">
+                        <form method="post" action="?command=removeFromHistory&movieId=<?= $movie['movie_id']; ?>">
                             <button id="remove-from-history-btn" class="card-action" type="submit">Remove from History</button>
                         </form>
                     </div>
                 </div>
-            </form>
+            </div>
 
         <?php endforeach; ?>
 

@@ -90,6 +90,20 @@ class FlickVaultController {
                 $this->removeFromWatchlist($this->input['movieId']);
                 header("Location: ?command=watchlist");
                 break;
+            case "removeFromHistory":
+                $this->removeFromHistory($this->input['movieId']);
+                header("Location: ?command=history");
+                break;
+            case "moveToWatchlist":
+                $this->addToWatchlist($this->input["movieId"], $this->input["movieTitle"], $this->input["movieLength"], $this->input["moviePoster"]);
+                $this->removeFromHistory($this->input['movieId']);
+                header("Location: ?command=watchlist");
+                break;
+            case "moveToHistory":
+                $this->addToHistory($this->input["movieId"], $this->input["movieTitle"], $this->input["movieLength"], $this->input["moviePoster"]);
+                $this->removeFromWatchlist($this->input['movieId']);
+                header("Location: ?command=history");
+                break;
             case "getUser":
                 $this->getUserData();
                 break;
