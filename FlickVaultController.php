@@ -61,6 +61,7 @@ class FlickVaultController {
                 $this->showDetails();
                 break;
             case "history":
+                $this->getHistory();
                 $this->showHistory();
                 break;
             case "home":
