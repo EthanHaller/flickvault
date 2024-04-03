@@ -29,7 +29,7 @@
 
 <body>
     <?php
-        include($filePath . '/flickvault/templates/navbar.php');
+    include($filePath . '/flickvault/templates/navbar.php');
     ?>
 
     <?php if (isset($_SESSION['movieDetails'])) : ?>
@@ -42,16 +42,15 @@
                         <img class="details-poster" style="display: none;" src="" alt="No Poster">
                     <?php endif ?>
                 </div>
-                <div class="movie-details col-lg-8">
+                <div class="movie-details col-lg-8 px-5">
                     <h2 class="details-title mt-5"><?= $_SESSION['movieDetails']['title']; ?></h2>
-                    <div class="details-stars mb-5">
-                        <span class="star">&starf;</span>
-                        <p><?= substr($_SESSION['movieDetails']['vote_average'], 0, 3); ?>/10</p>
-                    </div>
-                    <div class="details-year-rating-time mb-5">
-                        <p><?= substr($_SESSION['movieDetails']['release_date'], 0, 4); ?></p>
-                        <p>R</p>
-                        <p><?= $_SESSION['movieDetails']['runtime']; ?></p>
+                    <div class="d-flex align-items-center mb-5">
+                        <p class="details-year"><?= substr($_SESSION['movieDetails']['release_date'], 0, 4); ?></p>
+                        <p class="details-time"><?= $_SESSION['movieDetails']['runtime']; ?></p>
+                        <div class="details-stars ml-auto">
+                            <p><?= substr($_SESSION['movieDetails']['vote_average'], 0, 3); ?>/10</p>
+                            <span class="star">&starf;</span>
+                        </div>
                     </div>
                     <div class="details-description mb-3">
                         <p><?= $_SESSION['movieDetails']['overview']; ?></p>
@@ -63,24 +62,20 @@
                     </div>
                     <div class="details-people mb-3">
                         <p><strong>Directors: </strong></p>
-                        <?php foreach ($_SESSION['directors'] as $director) : ?>
-                            <?php if (!empty($director)) : ?>
-                                <p class="details-actor"><?= $director ?></p>
-                            <?php endif ?>
-                        <?php endforeach; ?>
+                        <p><?php echo implode(", ", array_filter($_SESSION['directors'])); ?></p>
                     </div>
                     <div class="details-people mb-3">
                         <p><strong>Actors:</strong></p>
-                        <?php foreach ($_SESSION['actors'] as $actor) : ?>
-                            <p class="details-actor"><?= $actor['name'] ?></p>
-                        <?php endforeach; ?>
+                        <p><?php echo implode(", ", array_column($_SESSION['actors'], 'name')); ?></p>
                     </div>
-                    <form method="post" action="?command=addToWatchlist&movieId=<?= $_SESSION['movieDetails']['id']; ?>&movieTitle=<?= $_SESSION['movieDetails']['title']; ?>&movieLength=<?= $_SESSION['movieDetails']['runtime']; ?>&moviePoster=https://image.tmdb.org/t/p/original/<?= $_SESSION['movieDetails']['poster_path']; ?>">
-                        <button type="submit">Add to Watchlist</button>
-                    </form>
-                    <form method="post" action="?command=addToHistory&movieId=<?= $_SESSION['movieDetails']['id']; ?>&movieTitle=<?= $_SESSION['movieDetails']['title']; ?>&movieLength=<?= $_SESSION['movieDetails']['runtime']; ?>&moviePoster=https://image.tmdb.org/t/p/original/<?= $_SESSION['movieDetails']['poster_path']; ?>">
-                        <button type="submit">Add to History</button>
-                    </form>
+                    <div class="details-actions d-flex justify-content-end align-items-center">
+                        <form method="post" action="?command=addToWatchlist&movieId=<?= $_SESSION['movieDetails']['id']; ?>&movieTitle=<?= $_SESSION['movieDetails']['title']; ?>&movieLength=<?= $_SESSION['movieDetails']['runtime']; ?>&moviePoster=https://image.tmdb.org/t/p/original/<?= $_SESSION['movieDetails']['poster_path']; ?>">
+                            <button type="submit">Add to Watchlist</button>
+                        </form>
+                        <form method="post" action="?command=addToHistory&movieId=<?= $_SESSION['movieDetails']['id']; ?>&movieTitle=<?= $_SESSION['movieDetails']['title']; ?>&movieLength=<?= $_SESSION['movieDetails']['runtime']; ?>&moviePoster=https://image.tmdb.org/t/p/original/<?= $_SESSION['movieDetails']['poster_path']; ?>">
+                            <button type="submit">Add to History</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

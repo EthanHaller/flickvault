@@ -17,8 +17,8 @@
             </ul>
             <form id="nav-search-form" class="d-flex" role="search" action="" method="get">
                 <input type="hidden" name="command" value="search">
-                <input class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search">
-                <button class="btn nav-search" type="submit">Search</button>
+                <input id="nav-search-input" class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search">
+                <button class="nav-search" type="submit">Search</button>
             </form>
 
             <div class="nav-item active ms-5">

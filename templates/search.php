@@ -134,6 +134,9 @@
 
     <div class="search-results container">
         <h2 class="antiqua mb-3">Results</h2>
+        <?php if(!isset($_SESSION['searchResults']) || empty($_SESSION['searchResults'])) :?>
+            <p class="result-title">No results matched your search.</p>
+        <?php endif; ?>
         <?php foreach ($_SESSION['searchResults'] as $movie) : ?>
             <form class="mb-4" method="post" action="?command=details&movieId=<?= $movie['id']; ?>">
                 <button class="search-result card-clickable" style="background-image: url('https://image.tmdb.org/t/p/original<?= $movie['backdrop_path']; ?>');">
