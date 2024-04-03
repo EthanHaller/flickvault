@@ -51,15 +51,14 @@
 
             <div class="movie-card-container">
                 <div class="card movie-card text-center">
-                    <form method="post" action="?command=details&movieId=<?= $movie['movie_id']; ?>">
-                        <button class="card-clickable" type="submit">
-                            <img src="<?= $movie['posterpath']; ?>" alt="<?= $movie['title']; ?>" class="card-img-top">
-                            <div class="card-body">
-                                <div class="movie-card-title"><?= $movie['title']; ?></div>
-                                <div class="movie-card-text"><?= $movie['length']; ?></div>
-                            </div>
-                        </button>
-                    </form>
+                    <button class="card-clickable" type="submit">
+                        <div class="movie-card-text"><?= $movie['order_id']; ?></div>
+                        <img src="<?= $movie['posterpath']; ?>" alt="Interstellar">
+                        <div class="card-body">
+                            <div class="movie-card-title"><?= $movie['title']; ?></div>
+                            <div class="movie-card-text"><?= $movie['length']; ?></div>
+                        </div>
+                    </button>
                     <div class="card-footer">
                         <form method="post" action="?command=moveToHistory&movieId=<?= $_SESSION['movieDetails']['id']; ?>&movieTitle=<?= $_SESSION['movieDetails']['title']; ?>&movieLength=<?= $_SESSION['movieDetails']['runtime']; ?>&moviePoster=https://image.tmdb.org/t/p/original/<?= $_SESSION['movieDetails']['poster_path']; ?>">
                             <button id="move-to-history-btn" class="card-action" type="submit">Move to History</button>
