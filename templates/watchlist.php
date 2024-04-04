@@ -51,14 +51,16 @@
 
             <div class="movie-card-container">
                 <div class="card movie-card text-center">
-                    <button class="card-clickable" type="submit">
-                        <div class="movie-card-text"><?= $movie['order_id']; ?></div>
-                        <img src="<?= $movie['posterpath']; ?>" alt="Interstellar">
-                        <div class="card-body">
-                            <div class="movie-card-title"><?= $movie['title']; ?></div>
-                            <div class="movie-card-text"><?= $movie['length']; ?></div>
-                        </div>
-                    </button>
+                    <form method="post" action="?command=details&movieId=<?= $movie['movie_id']; ?>">
+                        <button class="card-clickable" type="submit">
+                            <div class="movie-card-text"><?= $movie['order_id']; ?></div>
+                            <img src="<?= $movie['posterpath']; ?>" alt="Interstellar">
+                            <div class="card-body">
+                                <div class="movie-card-title"><?= $movie['title']; ?></div>
+                                <div class="movie-card-text"><?= $movie['length']; ?></div>
+                            </div>
+                        </button>
+                    </form>
                     <div class="card-footer">
                         <form method="post" action="?command=moveToHistory&movieId=<?= $movie['movie_id']; ?>&movieTitle=<?= $movie['title']; ?>&movieLength=<?= $movie['length']; ?>&moviePoster=<?= $movie['posterpath']; ?>">
                             <button id="move-to-history-btn" class="card-action" type="submit">Move to History</button>

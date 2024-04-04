@@ -3,9 +3,9 @@
 class FlickVaultController {
 
     // File paths for docker and server deployments
-    private $filePath = "/opt/src"; // dev
+    // private $filePath = "/opt/src"; // dev
     // private $filePath = "/students/vgn2bh/students/vgn2bh/private"; // server Alec
-    // private $filePath = "/students/ttk4ey/students/ttk4ey/private"; // server Ethan
+    private $filePath = "/students/ttk4ey/students/ttk4ey/private"; // server Ethan
 
     private $db;
     private $input;
