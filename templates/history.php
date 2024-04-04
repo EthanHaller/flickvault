@@ -76,7 +76,7 @@
                         </button>
                     </form>
                     <div class="card-footer">
-                        <form method="post" action="?command=moveToWatchlist&movieId=<?= $_SESSION['movieDetails']['id']; ?>&movieTitle=<?= $_SESSION['movieDetails']['title']; ?>&movieLength=<?= $_SESSION['movieDetails']['runtime']; ?>&moviePoster=https://image.tmdb.org/t/p/original/<?= $_SESSION['movieDetails']['poster_path']; ?>">
+                        <form method="post" action="?command=moveToWatchlist&movieId=<?= $movie['movie_id']; ?>&movieTitle=<?= $movie['title']; ?>&movieLength=<?= $movie['length']; ?>&moviePoster=<?= $movie['posterpath']; ?>">
                             <button id="move-to-watchlist-btn" class="card-action" type="submit">Move to Watchlist</button>
                         </form>
                         <form method="post" action="?command=removeFromHistory&movieId=<?= $movie['movie_id']; ?>">

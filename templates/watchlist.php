@@ -60,7 +60,7 @@
                         </div>
                     </button>
                     <div class="card-footer">
-                        <form method="post" action="?command=moveToHistory&movieId=<?= $_SESSION['movieDetails']['id']; ?>&movieTitle=<?= $_SESSION['movieDetails']['title']; ?>&movieLength=<?= $_SESSION['movieDetails']['runtime']; ?>&moviePoster=https://image.tmdb.org/t/p/original/<?= $_SESSION['movieDetails']['poster_path']; ?>">
+                        <form method="post" action="?command=moveToHistory&movieId=<?= $movie['movie_id']; ?>&movieTitle=<?= $movie['title']; ?>&movieLength=<?= $movie['length']; ?>&moviePoster=<?= $movie['posterpath']; ?>">
                             <button id="move-to-history-btn" class="card-action" type="submit">Move to History</button>
                         </form>
                         <form method="post" action="?command=removeFromWatchlist&movieId=<?= $movie['movie_id']; ?>">

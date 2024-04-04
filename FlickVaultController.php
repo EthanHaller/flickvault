@@ -151,6 +151,9 @@ class FlickVaultController {
                         password_hash($_POST["passwd"], PASSWORD_DEFAULT) // Use the hashed password!
                     );
 
+                    $res = $this->db->query("select id from users where email = $1", $_POST['email']);
+                    $_SESSION['userId'] = $res[0]['id'];
+
                     // Save email to session
                     $_SESSION["email"] = $_POST["email"];
 
