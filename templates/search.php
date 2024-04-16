@@ -61,68 +61,56 @@
         <div class="offcanvas offcanvas-end w-25 filter-menu" tabindex="-1" id="offcanvas" data-bs-theme="dark" data-bs-keyboard="false" data-bs-backdrop="false">
             <div class="offcanvas-header">
                 <h2>Filter and Sort</h2>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button id="close-filter-menu-btn" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div id="filter-menu-body" class="offcanvas-body">
                 <div class="filter-section">
-                    <h3>Genre</h3>
-                    <div class="checkbox-group">
-                        <label for="action" class="checkbox-item"><input type="checkbox" id="action" name="genre" value="action"> Action</label>
-                        <label for="adventure" class="checkbox-item"><input type="checkbox" id="adventure" name="genre" value="adventure"> Adventure</label>
-                        <label for="comedy" class="checkbox-item"><input type="checkbox" id="comedy" name="genre" value="comedy"> Comedy</label>
-                        <label for="crime" class="checkbox-item"><input type="checkbox" id="crime" name="genre" value="crime"> Crime</label>
-                        <label for="family" class="checkbox-item"><input type="checkbox" id="family" name="genre" value="family"> Family</label>
-                    </div>
-                </div>
-
-                <div class="filter-section">
-                    <h3>Rating</h3>
-                    <div class="checkbox-group">
-                        <label for="g"><input type="checkbox" id="g" name="rating" value="g"> G</label>
-                        <label for="pg"><input type="checkbox" id="pg" name="rating" value="pg"> PG</label>
-                        <label for="pg-13"><input type="checkbox" id="pg-13" name="rating" value="pg-13"> PG-13</label>
-                        <label for="r"><input type="checkbox" id="r" name="rating" value="r"> R</label>
-                        <label for="nc-17"><input type="checkbox" id="nc-17" name="rating" value="pg-13"> NC-17</label>
-                    </div>
-                </div>
-
-                <div class="filter-section">
                     <h3>Star Rating</h3>
                     <div id="star-rating">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="star-rating-dropdown-lower" data-bs-toggle="dropdown" aria-expanded="false">
-                                Min Star
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="star-rating-dropdown-lower">
-                                <li><a class="dropdown-item" href="#">1 star</a></li>
-                                <li><a class="dropdown-item" href="#">2 stars</a></li>
-                                <li><a class="dropdown-item" href="#">3 stars</a></li>
-                                <li><a class="dropdown-item" href="#">4 stars</a></li>
-                                <li><a class="dropdown-item" href="#">5 stars</a></li>
-                            </ul>
-                        </div>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="star-rating-dropdown-upper" data-bs-toggle="dropdown" aria-expanded="false">
-                                Max Star
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="star-rating-dropdown-upper">
-                                <li><a class="dropdown-item" href="#">1 star</a></li>
-                                <li><a class="dropdown-item" href="#">2 stars</a></li>
-                                <li><a class="dropdown-item" href="#">3 stars</a></li>
-                                <li><a class="dropdown-item" href="#">4 stars</a></li>
-                                <li><a class="dropdown-item" href="#">5 stars</a></li>
-                            </ul>
-                        </div>
+                        <label for="min-stars">Min Stars</label>
+                        <select id="min-stars" class="form-select" aria-label="Min Stars">
+                            <option selected value="1">1 Star</option>
+                            <option value="2">2 Stars</option>
+                            <option value="3">3 Stars</option>
+                            <option value="4">4 Stars</option>
+                            <option value="5">5 Stars</option>
+                            <option value="6">6 Stars</option>
+                            <option value="7">7 Stars</option>
+                            <option value="8">8 Stars</option>
+                            <option value="9">9 Stars</option>
+                            <option value="10">10 Stars</option>
+                        </select>
+
+                        <label for="max-stars">Max Stars</label>
+                        <select id="max-stars" class="form-select" aria-label="Max Stars">
+                            <option value="1">1 Star</option>
+                            <option value="2">2 Stars</option>
+                            <option value="3">3 Stars</option>
+                            <option value="4">4 Stars</option>
+                            <option value="5">5 Stars</option>
+                            <option value="6">6 Stars</option>
+                            <option value="7">7 Stars</option>
+                            <option value="8">8 Stars</option>
+                            <option value="9">9 Stars</option>
+                            <option selected value="10">10 Stars</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="filter-section">
                     <h3>Release Year</h3>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Min Year" aria-label="Min Year">
-                        <input type="text" class="form-control" placeholder="Max Year" aria-label="Max Year">
+                    <div class="">
+                        <div>
+                            <label for="min-year">Minimum Year:</label>
+                            <input class="form-control" type="number" id="min-year" name="min-year" min="1900" max="2024" value="1900">
+                        </div>
+                        <div>
+                            <label for="max-year">Maximum Year:</label>
+                            <input class="form-control" type="number" id="max-year" name="max-year" min="1900" max="2024" value="2024">
+                        </div>
                     </div>
                 </div>
+                <button class="btn" id="apply-filter-button">Apply</button>
             </div>
         </div>
 
@@ -134,7 +122,7 @@
 
     <div class="search-results container">
         <h2 class="antiqua mb-3">Results</h2>
-        <?php if(!isset($_SESSION['searchResults']) || empty($_SESSION['searchResults'])) :?>
+        <?php if (!isset($_SESSION['searchResults']) || empty($_SESSION['searchResults'])) : ?>
             <p class="result-title">No results matched your search.</p>
         <?php endif; ?>
         <?php foreach ($_SESSION['searchResults'] as $movie) : ?>
@@ -165,6 +153,31 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('#apply-filter-button').click(function() {
+
+                var minStars = parseFloat($('#min-stars').val());
+                var maxStars = parseFloat($('#max-stars').val());
+                var minYear = parseInt($('#min-year').val());
+                var maxYear = parseInt($('#max-year').val());
+
+                $('.search-results').find('.search-result').each(function() {
+                    var stars = parseFloat($(this).find('.result-stars p').text());
+                    var year = parseInt($(this).find('.result-year').text());
+
+                    if (stars >= minStars && stars <= maxStars && year >= minYear && year <= maxYear) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+
+                $('#offcanvas').find('.btn-close').click();
+            });
+        });
+    </script>
 </body>
 
 </html>
