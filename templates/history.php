@@ -49,7 +49,7 @@
     <div class="container-fluid filter-bar">
         <div class="filter-bar-item">Filter</div>
         <div class="filter-bar-item">
-            <div>Watch date <span>&#x2191;</span></div>
+            <div id="watch-date-filter">Watch date <span class="arrow-up"></span></div>
             <div>Rating</div>
         </div>
     </div>
@@ -64,13 +64,6 @@
                             <img src="<?= $movie['posterpath']; ?>" class="card-img-top" alt="<?= $movie['title']; ?>">
                             <div class="card-body">
                                 <div class="movie-card-title"><?= $movie['title']; ?></div>
-                                <!-- <div class="star-rating">
-                            <span class="star-filled">&#9733;</span>
-                            <span class="star-filled">&#9733;</span>
-                            <span class="star-filled">&#9733;</span>
-                            <span class="star-filled">&#9733;</span>
-                            <span>&#9733;</span>
-                        </div> -->
                                 <div class="movie-card-watch-date">Watched on <?= $movie['date_watched']; ?></div>
                             </div>
                         </button>
@@ -88,7 +81,21 @@
 
         <?php endforeach; ?>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+                $('#watch-date-filter').click(function() {
+
+                    $('.movie-card-grid').each(function() {
+                        $(this).append($(this).children().get().reverse());
+                    });
+
+                    var arrow = $('#watch-date-filter').find('span');
+                    arrow.toggleClass('arrow-up arrow-down');
+                });
+            });
+        </script>
 </body>
 
 </html>
