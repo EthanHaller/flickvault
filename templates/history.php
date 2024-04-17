@@ -47,11 +47,8 @@
     </header>
 
     <div class="container-fluid filter-bar">
-        <div class="filter-bar-item">Filter</div>
-        <div class="filter-bar-item">
-            <div id="watch-date-filter">Watch date <span class="arrow-up"></span></div>
-            <div>Rating</div>
-        </div>
+        <div class="filter-bar-item me-4">Sort by:</div>
+        <div id="watch-date-filter" class="filter-bar-item">Watch date <span class="arrow-up"></span></div>
     </div>
 
     <div class="container-fluid movie-card-grid">
