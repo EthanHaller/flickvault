@@ -22,6 +22,8 @@
   <link rel="stylesheet" type="text/css" href="styles/login.css">
   <link rel="stylesheet" type="text/css" href="styles/theme.css">
 
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -47,13 +49,55 @@
     <?= $errorMessage ?>
     <form id="login-form" class="col-lg-6 mx-auto" method="post" action="?command=login">
       <h2 class="mt-5 mb-3">Login</h2>
-      <input id="email-input" type="email" placeholder="Email" name="email" />
-      <input id="password-input" type="password" placeholder="Password" name="passwd" />
+      <input id="email-input" type="email" placeholder="Email" name="email">
+      <small id="email-error" class="form-text text-danger w-50"></small>
+
+      <input id="password-input" type="password" placeholder="Password" name="passwd">
+      <small id="password-error" class="form-text text-danger w-50"></small>
       <button type="submit" class="btn mt-3 mb-5">Login</button>
     </form>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
+
+<script>
+  $(() => {
+    $('#login-form').on('submit', function (event) {
+      event.preventDefault();
+
+      let emailInput = $('#email-input');
+      let passwordInput = $('#password-input');
+      let emailError = $('#email-error');
+      let passwordError = $('#password-error');
+      let isValid = true;
+
+      // Reset error messages
+      emailError.text('');
+      passwordError.text('');
+
+      if (!emailInput.val().match(/^\S+@\S+\.\S+$/)) {
+        emailError.text('Please enter a valid email address.');
+        isValid = false;
+      }
+
+      // Additional password validation rules
+      let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+      if (!passwordRegex.test(passwordInput.val())) {
+        passwordError.text('Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character');
+        isValid = false;
+      }
+
+      if(passwordInput.val().length == 0) {
+        passwordError.text('Please enter a password');
+        isValid = false;
+      }
+
+      if (isValid) {
+        this.submit();
+      }
+    });
+  });
+</script>
 
 </html>
