@@ -211,7 +211,7 @@ class FlickVaultController {
     }
 
     public function getHistory() {
-        $history = $this->db->query("select * from history where user_id = $1", $_SESSION['userId']);
+        $history = $this->db->query("select * from history where user_id = $1 order by date_watched desc", $_SESSION['userId']);
         $_SESSION['history'] = $history;
     }
 
