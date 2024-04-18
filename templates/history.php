@@ -52,8 +52,10 @@
     </div>
 
     <div class="container-fluid movie-card-grid">
+        <?php if (empty($_SESSION['history'])) : ?>
+            <h4 class="text-center" style="color: #d9d9d9; grid-column: 1 / -1;">You currently have no movies in your history. Search for movies to add them!</h4>
+        <?php endif ?>
         <?php foreach ($_SESSION['history'] as $movie) : ?>
-
             <div class="movie-card-container">
                 <div class="card movie-card text-center">
                     <form method="post" action="?command=details&movieId=<?= $movie['movie_id']; ?>">

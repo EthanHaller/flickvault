@@ -27,9 +27,9 @@
                     <i class="fa fa-sign-out text-white" style="font-size: 1.3rem; margin-left: 0.1rem;"></i>
                 </a>
 
-                <a href="?command=getUser" class="btn btn-secondary rounded-circle p-2 ms-2" style="width: 40px; height: 40px;">
+                <!-- <a href="?command=getUser" class="btn btn-secondary rounded-circle p-2 ms-2" style="width: 40px; height: 40px;">
                     <i class="fa fa-info text-white" style="font-size: 1.3rem; margin-left: 0.1rem;"></i>
-                </a>
+                </a> -->
             </div>
         </div>
     </div>

@@ -71,11 +71,11 @@
                     <div class="details-actions d-flex justify-content-end align-items-center">
                         <?php if ($_SESSION['inWatchlist'] == true) : ?>
                             <form method="post" action="?command=removeFromWatchlist&movieId=<?= $_SESSION['movieDetails']['id']; ?>">
-                                <button type="submit">Remove from Watchlist</button>
+                                <button class="details-action-button" type="submit">Remove from Watchlist</button>
                             </form>
                         <?php else : ?>
                             <form method="post" action="?command=addToWatchlist&movieId=<?= $_SESSION['movieDetails']['id']; ?>&movieTitle=<?= $_SESSION['movieDetails']['title']; ?>&movieLength=<?= $_SESSION['movieDetails']['runtime']; ?>&moviePoster=<?= $_SESSION['movieDetails']['poster_path']; ?>">
-                                <button type="submit">Add to Watchlist</button>
+                                <button class="details-action-button" type="submit">Add to Watchlist</button>
                             </form>
                         <?php endif ?>
                         <?php if ($_SESSION['inHistory'] == true) : ?>
@@ -95,7 +95,19 @@
     <?php endif ?>
 
     <script>
-        // .details-action-button on mouse over -> add .button-hover
+        // Select all action buttons
+        const featureButtons = document.querySelectorAll('.details-action-button');
+
+        // Add event listener to each button
+        featureButtons.forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                button.style = "background-color: #ffd966; color: #222222;";
+            });
+
+            button.addEventListener('mouseleave', () => {
+                button.style = "background-color: #222222; color: #ffd966";
+            });
+        });
     </script>
 </body>
 

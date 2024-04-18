@@ -83,33 +83,29 @@ class FlickVaultController {
                 break;
             case "addToWatchlist":
                 $this->addToWatchlist($this->input["movieId"], $this->input["movieTitle"], $this->input["movieLength"], $this->input["moviePoster"]);
-                // $this->showDetails();
-                header("Location: ?command=details&movieId=" . $this->input["movieId"]);
+                header("Location: ?command=watchlist");
                 break;
             case "addToHistory":
                 $this->addToHistory($this->input["movieId"], $this->input["movieTitle"], $this->input["movieLength"], $this->input["moviePoster"]);
-                // $this->showDetails();
-                header("Location: ?command=details&movieId=" . $this->input["movieId"]);
+                header("Location: ?command=history");
                 break;
             case "removeFromWatchlist":
                 $this->removeFromWatchlist($this->input['movieId']);
-                // $this->showDetails();
-                header("Location: ?command=details&movieId=" . $this->input["movieId"]);
+                header("Location: ?command=watchlist");
                 break;
             case "removeFromHistory":
                 $this->removeFromHistory($this->input['movieId']);
-                // $this->showDetails();
-                header("Location: ?command=details&movieId=" . $this->input["movieId"]);
+                header("Location: ?command=history");
                 break;
             case "moveToWatchlist":
                 $this->addToWatchlist($this->input["movieId"], $this->input["movieTitle"], $this->input["movieLength"], $this->input["moviePoster"]);
                 $this->removeFromHistory($this->input['movieId']);
-                // header("Location: ?command=watchlist");
+                header("Location: ?command=history");
                 break;
             case "moveToHistory":
                 $this->addToHistory($this->input["movieId"], $this->input["movieTitle"], $this->input["movieLength"], $this->input["moviePoster"]);
                 $this->removeFromWatchlist($this->input['movieId']);
-                // header("Location: ?command=history");
+                header("Location: ?command=watchlist");
                 break;
             case "getUser":
                 $this->getUserData();

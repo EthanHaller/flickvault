@@ -90,11 +90,11 @@
   // Add event listener to each feature title
   featureDivs.forEach(div => {
     div.addEventListener('mouseenter', () => {
-      div.style.backgroundColor = 'goldenrod';
+      div.style = "border: 1px solid #ffd966; border-radius: 1rem;";
     });
 
     div.addEventListener('mouseleave', () => {
-      div.style.backgroundColor = 'transparent';
+      div.style = "border: 1px solid #222222; border-radius: 1rem;";
     });
   });
 </script>
