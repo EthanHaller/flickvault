@@ -69,18 +69,34 @@
                         <p><?php echo implode(", ", array_column($_SESSION['actors'], 'name')); ?></p>
                     </div>
                     <div class="details-actions d-flex justify-content-end align-items-center">
-                        <form method="post" action="?command=addToWatchlist&movieId=<?= $_SESSION['movieDetails']['id']; ?>&movieTitle=<?= $_SESSION['movieDetails']['title']; ?>&movieLength=<?= $_SESSION['movieDetails']['runtime']; ?>&moviePoster=https://image.tmdb.org/t/p/original/<?= $_SESSION['movieDetails']['poster_path']; ?>">
-                            <button type="submit">Add to Watchlist</button>
-                        </form>
-                        <form method="post" action="?command=addToHistory&movieId=<?= $_SESSION['movieDetails']['id']; ?>&movieTitle=<?= $_SESSION['movieDetails']['title']; ?>&movieLength=<?= $_SESSION['movieDetails']['runtime']; ?>&moviePoster=https://image.tmdb.org/t/p/original/<?= $_SESSION['movieDetails']['poster_path']; ?>">
-                            <button type="submit">Add to History</button>
-                        </form>
+                        <?php if ($_SESSION['inWatchlist'] == true) : ?>
+                            <form method="post" action="?command=removeFromWatchlist&movieId=<?= $_SESSION['movieDetails']['id']; ?>">
+                                <button type="submit">Remove from Watchlist</button>
+                            </form>
+                        <?php else : ?>
+                            <form method="post" action="?command=addToWatchlist&movieId=<?= $_SESSION['movieDetails']['id']; ?>&movieTitle=<?= $_SESSION['movieDetails']['title']; ?>&movieLength=<?= $_SESSION['movieDetails']['runtime']; ?>&moviePoster=<?= $_SESSION['movieDetails']['poster_path']; ?>">
+                                <button type="submit">Add to Watchlist</button>
+                            </form>
+                        <?php endif ?>
+                        <?php if ($_SESSION['inHistory'] == true) : ?>
+                            <form method="post" action="?command=removeFromHistory&movieId=<?= $_SESSION['movieDetails']['id']; ?>">
+                                <button class="details-action-button" type="submit">Remove from History</button>
+                            </form>
+                        <?php else : ?>
+                            <form method="post" action="?command=addToHistory&movieId=<?= $_SESSION['movieDetails']['id']; ?>&movieTitle=<?= $_SESSION['movieDetails']['title']; ?>&movieLength=<?= $_SESSION['movieDetails']['runtime']; ?>&moviePoster=<?= $_SESSION['movieDetails']['poster_path']; ?>">
+                                <button class="details-action-button" type="submit">Add to History</button>
+                            </form>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>
         </div>
 
     <?php endif ?>
+
+    <script>
+        // .details-action-button on mouse over -> add .button-hover
+    </script>
 </body>
 
 </html>
