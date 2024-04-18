@@ -138,14 +138,16 @@
             let movie = $('#movie').val();
             let ranking = $('#ranking').val();
 
+            const data = {
+                movie: movie,
+                ranking: ranking
+            }
+
             // Send the AJAX request
             $.ajax({
                 type: 'POST',
                 url: 'http://localhost:8080/flickvault/?command=reorderWatchlist',
-                data: {
-                    movie: movie,
-                    ranking: ranking
-                },
+                data: data,
                 success: (response) => {
                     reloadWatchlistGrid()
                 },
