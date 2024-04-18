@@ -84,10 +84,8 @@
 </body>
 
 <script>
-  // Select all feature titles
   const featureDivs = document.querySelectorAll('.feature');
 
-  // Add event listener to each feature title
   featureDivs.forEach(div => {
     div.addEventListener('mouseenter', () => {
       div.style = "border: 1px solid #ffd966; border-radius: 1rem;";

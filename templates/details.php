@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- We need some mark as watched button with a date select -->
 
 <head>
     <meta charset="UTF-8">
@@ -95,10 +94,8 @@
     <?php endif ?>
 
     <script>
-        // Select all action buttons
         const featureButtons = document.querySelectorAll('.details-action-button');
 
-        // Add event listener to each button
         featureButtons.forEach(button => {
             button.addEventListener('mouseenter', () => {
                 button.style = "background-color: #ffd966; color: #222222;";

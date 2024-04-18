@@ -2,8 +2,6 @@
 <html lang="en" data-bs-theme="light">
 
 <head>
-  <!-- https://cs4640.cs.virginia.edu/ttk4ey/flickvault/ -->
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Alec McCue, Ethan Haller">

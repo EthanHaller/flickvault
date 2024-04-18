@@ -49,7 +49,8 @@
         $('#userInfo').on('click', (event) => {
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost:8080/flickvault/?command=getUser',
+                // url: 'http://localhost:8080/flickvault/?command=getUser',
+                url: 'https://cs4640.cs.virginia.edu/vgn2bh/flickvault/?command=getUser',
                 success: (response) => {
                     const { id, email } = response
                     $('#userId').html(`<span>User ID: ${id}</span>`)
