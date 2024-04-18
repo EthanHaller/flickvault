@@ -51,8 +51,9 @@
                 type: 'GET',
                 url: 'http://localhost:8080/flickvault/?command=getUser',
                 success: (response) => {
-                    $('#userId').html(`<span>User ID: ${response.id}</span>`)
-                    $('#userEmail').html(response.email)
+                    const { id, email } = response
+                    $('#userId').html(`<span>User ID: ${id}</span>`)
+                    $('#userEmail').html(email)
                 },
                 error: (xhr, status, error) => {
                     console.error(error);
