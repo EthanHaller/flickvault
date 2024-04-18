@@ -22,15 +22,42 @@
                 <button class="nav-search" type="submit">Search</button>
             </form>
 
-            <div class="nav-item active ms-5">
-                <a href="?command=logout" class="btn btn-danger rounded-circle p-2" style="width: 40px; height: 40px;">
-                    <i class="fa fa-sign-out text-white" style="font-size: 1.3rem; margin-left: 0.1rem;"></i>
+            <div class="nav-item dropdown active ms-5 me-3">
+                <a id="userInfo" class="btn btn-secondary rounded-circle p-2 ms-2" style="width: 40px; height: 40px;" href="#" role="button" data-bs-toggle="dropdown">
+                    <i class="fa fa-user text-white" style="font-size: 1.3rem; margin-left: 0.1rem;"></i>
                 </a>
-
-                <a href="?command=getUser" class="btn btn-secondary rounded-circle p-2 ms-2" style="width: 40px; height: 40px;">
-                    <i class="fa fa-info text-white" style="font-size: 1.3rem; margin-left: 0.1rem;"></i>
-                </a>
+                <ul class="dropdown-menu dropdown-menu-end mt-2">
+                    <li>
+                        <p id="userId" class="dropdown-item disabled"></p>
+                    </li>
+                    <li>
+                        <p id="userEmail" class="dropdown-item disabled"></p>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="?command=logout">Sign out</a></li>
+                </ul>
             </div>
         </div>
     </div>
 </nav>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+    $(() => {
+        $('#userInfo').on('click', (event) => {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/flickvault/?command=getUser',
+                success: (response) => {
+                    $('#userId').html(`<span>User ID: ${response.id}</span>`)
+                    $('#userEmail').html(response.email)
+                },
+                error: (xhr, status, error) => {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
