@@ -7,12 +7,13 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" href="?command=watchlist">Watch List</a>
+            <?php $current_page = $_GET['command']; ?>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-2">
+                <li class="nav-item active">
+                    <a class="nav-link fs-5 <?php if ($current_page === 'watchlist') echo 'active border rounded'; ?>" href="?command=watchlist">Watch List</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="?command=history">Watch History</a>
+                    <a class="nav-link fs-5 <?php if ($current_page === 'history') echo 'active border rounded'; ?>" href="?command=history">Watch History</a>
                 </li>
             </ul>
             <form id="nav-search-form" class="d-flex" role="search" action="" method="get">

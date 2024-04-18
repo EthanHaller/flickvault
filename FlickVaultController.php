@@ -78,6 +78,9 @@ class FlickVaultController {
                 $this->getWatchlist();
                 $this->showWatchlist();
                 break;
+            case "reorderWatchlist":
+                $this->reorderWatchlist();
+                break;
             case "addToWatchlist":
                 $this->addToWatchlist($this->input["movieId"], $this->input["movieTitle"], $this->input["movieLength"], $this->input["moviePoster"]);
                 // $this->showDetails();
@@ -207,7 +210,7 @@ class FlickVaultController {
     }
 
     public function getWatchlist() {
-        $watchlist = $this->db->query("select * from watchlist where user_id = $1", $_SESSION['userId']);
+        $watchlist = $this->db->query("SELECT * FROM watchlist WHERE user_id = $1 ORDER BY order_id ASC", $_SESSION['userId']);
         $_SESSION['watchlist'] = $watchlist;
     }
 
@@ -336,6 +339,32 @@ class FlickVaultController {
         header('Content-Type: application/json');
 
         echo $userData;
+    }
+
+    public function reorderWatchlist() {
+        if (!empty($_POST["movie"]) && !empty($_POST["ranking"])) {
+            $movie = json_decode($_POST['movie']);
+            $movie->newRanking = $_POST['ranking'];
+
+            // $data = json_encode($movie)
+
+            $newRank = $movie->newRanking;
+            $oldRank = $movie->order_id;
+
+            $direction = ($newRank < $oldRank) ? 'up' : 'down';
+            
+            // Update order_id for selected movie
+            $this->db->query("UPDATE watchlist SET order_id = $newRank WHERE id = $movie->id");
+
+            // Update order_id of surrounding movies
+            if ($direction === 'up') {
+                // Shift down the order_id of movies from the new rank to the previous rank
+                $this->db->query("UPDATE watchlist SET order_id = order_id + 1 WHERE order_id >= $newRank AND order_id < $oldRank AND id != $movie->id");
+            } else {
+                // Shift up the order_id of movies from the previous rank to the new rank
+                $this->db->query("UPDATE watchlist SET order_id = order_id - 1 WHERE order_id <= $newRank AND order_id > $oldRank AND id != $movie->id");
+            }
+        }
     }
 
     # SHOW PAGES SECTION 

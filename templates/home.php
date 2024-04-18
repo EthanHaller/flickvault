@@ -50,7 +50,7 @@
 
   <div class="full-height-container">
     <div class="container text-center">
-      <div class="home-title">
+      <div class="home-title mb-4">
         <h2 class="display-4">Welcome to FlickVault</h2>
         <p class="lead">Organize Your Movie Watching Experience</p>
       </div>
@@ -82,5 +82,21 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
+
+<script>
+  // Select all feature titles
+  const featureDivs = document.querySelectorAll('.feature');
+
+  // Add event listener to each feature title
+  featureDivs.forEach(div => {
+    div.addEventListener('mouseenter', () => {
+      div.style.backgroundColor = 'goldenrod';
+    });
+
+    div.addEventListener('mouseleave', () => {
+      div.style.backgroundColor = 'transparent';
+    });
+  });
+</script>
 
 </html>

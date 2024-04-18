@@ -66,7 +66,7 @@
             <div id="filter-menu-body" class="offcanvas-body">
                 <div class="filter-section">
                     <h3>Star Rating</h3>
-                    <div id="star-rating">
+                    <div id="star-rating" class="d-flex flex-column">
                         <label for="min-stars">Min Stars</label>
                         <select id="min-stars" class="form-select" aria-label="Min Stars">
                             <option selected value="1">1 Star</option>
@@ -99,15 +99,12 @@
 
                 <div class="filter-section">
                     <h3>Release Year</h3>
-                    <div class="">
-                        <div>
-                            <label for="min-year">Minimum Year:</label>
-                            <input class="form-control" type="number" id="min-year" name="min-year" min="1900" max="2024" value="1900">
-                        </div>
-                        <div>
-                            <label for="max-year">Maximum Year:</label>
-                            <input class="form-control" type="number" id="max-year" name="max-year" min="1900" max="2024" value="2024">
-                        </div>
+                    <div class="d-flex flex-column gap-3">
+                        <label for="min-year">Minimum Year</label>
+                        <input class="form-control" type="number" id="min-year" name="min-year" min="1900" max="2024" value="1900">
+
+                        <label for="max-year">Maximum Year</label>
+                        <input class="form-control" type="number" id="max-year" name="max-year" min="1900" max="2024" value="2024">
                     </div>
                 </div>
                 <button class="btn" id="apply-filter-button">Apply</button>
