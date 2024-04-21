@@ -68,7 +68,7 @@
                         <p><strong>Actors:</strong></p>
                         <p><?php echo implode(", ", array_column($_SESSION['actors'], 'name')); ?></p>
                     </div>
-                    <div class="details-actions d-flex justify-content-end align-items-center">
+                    <div class="details-actions d-flex justify-content-end align-items-center mb-3">
                         <?php if ($_SESSION['inWatchlist'] == true) : ?>
                             <form method="post" action="?command=removeFromWatchlist&movieId=<?= $_SESSION['movieDetails']['id']; ?>">
                                 <button class="details-action-button" type="submit">Remove from Watchlist</button>

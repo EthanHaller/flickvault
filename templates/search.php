@@ -58,7 +58,7 @@
         </div>
 
         <!-- Off-canvas Menu -->
-        <div class="offcanvas offcanvas-end w-25 filter-menu" tabindex="-1" id="offcanvas" data-bs-theme="dark" data-bs-keyboard="false" data-bs-backdrop="false">
+        <div class="offcanvas offcanvas-end filter-menu" tabindex="-1" id="offcanvas" data-bs-theme="dark" data-bs-keyboard="false" data-bs-backdrop="false">
             <div class="offcanvas-header">
                 <h2>Filter and Sort</h2>
                 <button id="close-filter-menu-btn" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
