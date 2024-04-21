@@ -22,7 +22,7 @@
                 <button class="nav-search" type="submit">Search</button>
             </form>
 
-            <div class="nav-item dropdown active ms-5 me-3">
+            <div id="navUserInfo" class="nav-item dropdown active ms-5 me-3">
                 <a id="userInfo" class="btn btn-secondary rounded-circle p-2 ms-2" style="width: 40px; height: 40px;" href="#" role="button" data-bs-toggle="dropdown">
                     <i class="fa fa-user text-white" style="font-size: 1.3rem; margin-left: 0.1rem;"></i>
                 </a>
