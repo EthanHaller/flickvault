@@ -146,7 +146,8 @@
             // Send the AJAX request
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:8080/flickvault/?command=reorderWatchlist',
+                // url: 'http://localhost:8080/flickvault/?command=reorderWatchlist',
+                url: 'https://cs4640.cs.virginia.edu/vgn2bh/flickvault/?command=reorderWatchlist',
                 data: data,
                 success: (response) => {
                     reloadWatchlistGrid()
@@ -161,7 +162,8 @@
             // Make an AJAX call to fetch the updated watchlist content
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost:8080/flickvault/?command=getWatchlist',
+                // url: 'http://localhost:8080/flickvault/?command=getWatchlist',
+                url: 'https://cs4640.cs.virginia.edu/vgn2bh/flickvault/?command=getWatchlist',
                 success: (response) => {
                     location.reload();
                 },
