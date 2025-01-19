@@ -1,6 +1,6 @@
 # FlickVault
 
-FlickVault is a web application developed as a class project for "Programming Languages for Web Applications." It allows users to log in, search for movies using an API, add them to their backlog or history, and rate them. This project was awarded "Most Usable" by the class for its accessible user experience and responsive design!
+FlickVault is a web application developed as a class project for "Programming Languages for Web Applications." It allows users to log in, search for movies using an API, add them to their backlog or history, and rate them. This project was awarded "Most Accessible" by the class for its accessible user experience and responsive design!
 
 ## Features
 
@@ -8,7 +8,7 @@ FlickVault is a web application developed as a class project for "Programming La
 - **Movie Search:** Search for any movie!
 - **Backlog and History:** Users can add movies to their backlog or history lists.
 - **Rating System:** Ability to rate movies.
-- **Technologies Used:** JavaScript, HTML, CSS, PHP, PostgreSQL.
+- **Technologies Used:** JavaScript, HTML, CSS, PHP, PostgreSQL, Docker.
 
 ## Usage
 
